@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Academy</title>
+</head>
+
+<body>
+    <!--header section-->
+    <header class="header">
+        <div class="hero"> <!--hero section-->
+            <div class="top-bar"> <!--top bar-->
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+                <menu>
+                    <a href="">Home</a>
+                    <a href="">About</a>
+                    <a href="">Courses</a>
+                    <a href="">Contact</a>
+                    <a href="">Apply For Admission</a>
+                </menu>
+            </div> <!--top bar ends here-->
+            <img src="{% static 'images/hero-image.jpg' %}" alt="Hero Image">
+            <p>Welcome to the Music Academy!</p>
+            <p>Let your music speak.</p>
+            <a href="">Get Started</a>
+        </div> <!--hero section ends here-->
+    </header>
+
+    <!--main section holding all main content-->
+    <main>
+        <section class="intro"> <!--introduction section-->
+            <h2>Where music begins...</h2>
+            <p>Music is more than notes, rhythms, and melodies — it is a way to express who we are, connect with others,
+                and turn emotions into something we can share. At our academy, we believe that every musician has a
+                unique sound waiting to be discovered.</p>
+
+            <p>Whether you're picking up an instrument for the first time or looking to refine the skills you already
+                have, our academy provides a welcoming space to learn, practice, create, and grow. With dedicated
+                instructors, engaging lessons, and a passion for music at the heart of everything we do, we help
+                students build confidence while enjoying their musical journey.</p>
+
+            <p>Your music has a story. Let’s help you play it. 🎶</p>
+        </section>
+
+        <section class="courses-section"> <!--courses section-->
+            <h2>Our Courses</h2>
+            <p>Build your Sound</p>
+
+            <div class="courses container">
+                <div class="course-card">
+                    <div>
+                        <h3>Foundation</h3>
+                        <svg></svg>
+                    </div>
+                    <div>
+                        <span>
+                            <h4>Music Theory</h4>
+                        </span>
+                        <span>
+                            <h4>Ear Training</h4>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="path"> <!--path svg-->
+                    <svg></svg>
+                </div>
+
+                <div class="course-card">
+                    <div>
+                        <span>
+                            <h4>Instrumental Studies</h4>
+                        </span>
+                        <span>
+                            <h4>Vocal Technique</h4>
+                        </span>
+                    </div>
+                    <div>
+                        <h3>Performance</h3>
+                        <svg></svg>
+                    </div>
+                </div>
+
+                <div class="path"> <!--path svg-->
+                    <svg></svg>
+                </div>
+
+                <div class="course-card">
+                    <div>
+                        <h3>Technical Skills</h3>
+                        <svg></svg>
+                    </div>
+                    <div>
+                        <span>
+                            <h4>Audio Engineering</h4>
+                        </span>
+                        <span>
+                            <h4>Production</h4>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="path"> <!--path svg-->
+                    <svg></svg>
+                </div>
+
+                <div class="course-card">
+                    <div>
+                        <span>
+                            <h4>Music Business</h4>
+                        </span>
+                        <span>
+                            <h4>Copyright</h4>
+                        </span>
+                    </div>
+                    <div>
+                        <h3>Music Business & Rights</h3>
+                        <svg></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="Instructors-section"> <!--instructors section -->
+            <div>
+                <menu> <!--instruments menu cards for categorized instructors-->
+                    <span><img src="" alt=""></span>
+                    <span><img src="" alt=""></span>
+                    <span><img src="" alt=""></span>
+                    <span><img src="" alt=""></span>
+                </menu>
+                <div class="instructors">
+                    <!--add instructor cards here using a loop -->
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        <p>&copy; 2024 Music Academy. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
