@@ -34,21 +34,87 @@ body {
 
 .top-bar {
     display: flex;
+    position: relative;
     padding: 3vh;
+    max-height: 80px;
+    margin-inline: 0;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     border: solid rgba(195, 192, 175, 0.341);
     box-shadow: 0 0 5px rgb(0, 0, 0);
     border-radius: 90px;
     backdrop-filter: blur(6px);
+    overflow: hidden;
+    will-change: width, border-radius;
+    animation: top-bar-reveal 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+@keyframes top-bar-reveal {
+    0% {
+        width: 72px;
+        max-height: 80px;
+        padding: 3vh;
+        margin-inline: calc((100% - 72px) / 2);
+        border-radius: 50%;
+    }
+
+    25% {
+        width: 72px;
+        max-height: 80px;
+        margin-inline: calc((100% - 72px) / 2);
+        border-radius: 90px;
+    }
+
+    75% {
+        width: 100%;
+        max-height: 80px;
+        margin-inline: 0;
+        border-radius: 90px;
+    }
+
+    100% {
+        width: 100%;
+        max-height: 80px;
+        margin-inline: 0;
+        border-radius: 90px;
+    }
 }
 
 .top-logo {
     display: block;
     width: clamp(52px, 6vw, 78px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
     height: auto;
-    margin: -10px 0;
+    margin: 0;
     object-fit: contain;
+    transform: translate(-50%, -50%);
+    animation: top-logo-settle 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.top-bar.reveal-complete {
+    animation: none;
+}
+
+.top-logo.reveal-complete {
+    animation: none;
+    left: 3vh;
+    transform: translate(0, -50%);
+}
+
+@keyframes top-logo-settle {
+
+    0%,
+    25% {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        left: 3vh;
+        transform: translate(0, -50%);
+    }
 }
 
 .top-bar menu {
@@ -58,10 +124,26 @@ body {
     flex-wrap: wrap;
     justify-content: flex-end;
     list-style: none;
+    margin-left: auto;
+    animation: menu-fade-in 500ms ease-out 2.8s both;
+}
+
+@keyframes menu-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .menu-button {
     display: none;
+    position: relative;
+    z-index: 2;
     width: 44px;
     height: 44px;
     padding: 9px;
@@ -69,6 +151,18 @@ body {
     border-radius: 8px;
     background: transparent;
     cursor: pointer;
+}
+
+@keyframes menu-button-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .menu-button span {
@@ -107,22 +201,96 @@ body {
         padding: 18px;
         border-radius: 28px;
         flex-wrap: wrap;
+        animation-name: top-bar-reveal-mobile;
+        animation-duration: 3.2s;
+    }
+
+    .top-logo {
+        animation-name: top-logo-settle-mobile;
+        animation-duration: 3.2s;
+    }
+
+    @keyframes top-logo-settle-mobile {
+
+        0%,
+        65% {
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        100% {
+            left: 18px;
+            transform: translate(0, -50%);
+        }
+    }
+
+    @keyframes top-bar-reveal-mobile {
+        0% {
+            width: 90px;
+            max-height: 80px;
+            padding: 10px;
+            margin-inline: calc((100% - 90px) / 2);
+            border-radius: 28px;
+        }
+
+        65% {
+            width: 100%;
+            max-height: 80px;
+            padding: 18px;
+            margin-inline: 0;
+            border-radius: 28px;
+        }
+
+        100% {
+            width: 100%;
+            max-height: 80px;
+            margin-inline: 0;
+            border-radius: 28px;
+        }
     }
 
     .menu-button {
         display: block;
         margin-left: auto;
+        animation: menu-button-reveal 450ms ease-out 2.75s both;
     }
 
     .top-bar menu {
-        display: none;
+        display: flex;
         width: 100%;
+        max-height: 0;
         gap: 12px 18px;
         justify-content: flex-start;
+        animation: none;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: max-height 300ms ease-in-out, opacity 220ms ease-in-out, transform 300ms ease-in-out,
+            visibility 300ms ease-in-out;
+        visibility: hidden;
     }
 
     .top-bar menu.is-open {
-        display: flex;
+        max-height: 300px;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+        visibility: visible;
+    }
+
+    .top-bar.menu-open {
+        max-height: 500px !important;
+        transition: max-height 300ms ease-in-out;
+    }
+
+    .top-bar.reveal-complete .top-logo {
+        left: 18px;
+    }
+
+    .top-bar.reveal-complete.menu-open .top-logo {
+        top: 18px;
+        transform: none;
     }
 
     .top-bar menu a {
@@ -137,10 +305,18 @@ body {
 
     .top-bar {
         align-items: flex-start;
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .top-bar menu a:last-child {
         flex-basis: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .top-bar,
+    .top-bar menu {
+        animation: none;
     }
 }
