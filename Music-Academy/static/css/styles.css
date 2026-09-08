@@ -1,4 +1,146 @@
-*{
+/*---------------------------------------------------------
+               CSS FILE FOR MAIN STRUCTURE             
+  ---------------------------------------------------------*/
+
+* {
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+body {
+    background-color: #fff8ca;
+    color: #222;
+    font-family: 'montserrat', Arial, sans-serif;
+}
+
+/*---------------------------------------------------------
+                        HEADER SECTION             
+  ---------------------------------------------------------*/
+
+.header {
+    background-image: url('../images/background/header-img.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: clamp(520px, 75vh, 700px);
+}
+
+.hero {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px 20px;
+}
+
+.top-bar {
+    display: flex;
+    padding: 3vh;
+    align-items: center;
+    justify-content: space-between;
+    border: solid rgba(195, 192, 175, 0.341);
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+    border-radius: 90px;
+    backdrop-filter: blur(6px);
+}
+
+.top-logo {
+    display: block;
+    width: clamp(52px, 6vw, 78px);
+    height: auto;
+    margin: -10px 0;
+    object-fit: contain;
+}
+
+.top-bar menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    list-style: none;
+}
+
+.menu-button {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-button span {
+    display: block;
+    height: 3px;
+    margin: 4px 0;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.top-bar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.top-bar a:hover {
+    color: #fff8ca;
+}
+
+.top-bar .apply-btn {
+    background-color: #502c2c;
+    padding: 20px;
+    border-radius: 40px;
+    border: 1px solid rgba(54, 30, 30, 0.668);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 16px;
+    }
+
+    .top-bar {
+        gap: 14px;
+        padding: 18px;
+        border-radius: 28px;
+        flex-wrap: wrap;
+    }
+
+    .menu-button {
+        display: block;
+        margin-left: auto;
+    }
+
+    .top-bar menu {
+        display: none;
+        width: 100%;
+        gap: 12px 18px;
+        justify-content: flex-start;
+    }
+
+    .top-bar menu.is-open {
+        display: flex;
+    }
+
+    .top-bar menu a {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        min-height: 560px;
+    }
+
+    .top-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .top-bar menu a:last-child {
+        flex-basis: 100%;
+    }
 }
