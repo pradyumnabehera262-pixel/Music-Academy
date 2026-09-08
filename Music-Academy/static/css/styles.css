@@ -33,7 +33,7 @@ body {
 }
 
 .top-bar {
-    display: flex;
+    display:flex ;
     position: relative;
     padding: 3vh;
     max-height: 80px;
@@ -46,7 +46,7 @@ body {
     backdrop-filter: blur(6px);
     overflow: hidden;
     will-change: width, border-radius;
-    animation: top-bar-reveal 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+    animation: top-bar-reveal 2.0s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
 @keyframes top-bar-reveal {
@@ -90,7 +90,7 @@ body {
     margin: 0;
     object-fit: contain;
     transform: translate(-50%, -50%);
-    animation: top-logo-settle 4.5s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+    animation: top-logo-settle 2.0s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
 .top-bar.reveal-complete {
