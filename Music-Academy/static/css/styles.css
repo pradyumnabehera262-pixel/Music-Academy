@@ -19,18 +19,30 @@ body {
   ---------------------------------------------------------*/
 
 .header {
+    position: relative;
+    min-height: 180vh;
     background-image: url('../images/background/header-img.jpg');
     background-size: cover;
     background-position: center;
-    min-height: clamp(520px, 75vh, 700px);
 }
 
 .hero {
+    position: sticky;
+    top: 0;
     width: 100%;
     max-width: 1200px;
+    min-height: 100vh;
     margin: 0 auto;
     padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 }
+
+/*----------------------------------------------------------
+                   TOP BAR    
+-----------------------------------------------------------*/
 
 .top-bar {
     display:flex ;
@@ -82,7 +94,7 @@ body {
 
 .top-logo {
     display: block;
-    width: clamp(52px, 6vw, 78px);
+    width: clamp(40px, 5vw, 70px);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -319,4 +331,111 @@ body {
     .top-bar menu {
         animation: none;
     }
+}
+
+
+/*--------------------------------------------------------
+                       HERO SECTION          
+ -------------------------------------------------------*/
+
+.hero-stage {
+    position: relative;
+    width: min(1100px, 90%);
+    height: calc(100vh - 130px);
+    min-height: 500px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+    flex: 1;
+}
+
+.music-academy {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2.5rem, 7vw, 7rem);
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #fff;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+.music-academy .music,
+.music-academy .academy {
+    display: inline-block;
+    transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+.hero-visual {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(80px) scale(0.8);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.hero-logo {
+    width: clamp(120px, 16vw, 220px);
+    height: auto;
+    display: block;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25));
+}
+
+.hero-visual p,
+.hero-visual a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.hero-visual p {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    line-height: 1.5;
+}
+
+.hero-visual a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+    font-weight: 700;
+}
+
+.hero.is-revealed .music-academy {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.94);
+    filter: blur(3px);
+}
+
+.hero.is-revealed .music {
+    transform: translateX(-55px);
+    opacity: 0;
+}
+
+.hero.is-revealed .academy {
+    transform: translateX(55px);
+    opacity: 0;
+}
+
+.hero.is-revealed .hero-visual {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }

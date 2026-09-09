@@ -3,8 +3,9 @@ function initializeMenu() {
 	const topMenu = document.querySelector('#top-menu');
 	const topBar = document.querySelector('.top-bar');
 	const topLogo = document.querySelector('.top-logo');
+	const hero = document.querySelector('.hero');
 
-	if (!menuButton || !topMenu || !topBar || !topLogo) {
+	if (!topBar || !topLogo) {
 		return;
 	}
 
@@ -15,12 +16,29 @@ function initializeMenu() {
 		}
 	});
 
-	menuButton.addEventListener('click', () => {
-		const isOpen = topMenu.classList.toggle('is-open');
-		topBar.classList.toggle('menu-open', isOpen);
-		menuButton.setAttribute('aria-expanded', String(isOpen));
-		menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-	});
+	if (menuButton && topMenu) {
+		menuButton.addEventListener('click', () => {
+			const isOpen = topMenu.classList.toggle('is-open');
+			topBar.classList.toggle('menu-open', isOpen);
+			menuButton.setAttribute('aria-expanded', String(isOpen));
+			menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+		});
+	}
+
+	if (hero) {
+		const header = document.querySelector('.header');
+		const updateHeroScroll = () => {
+			if (!header) return;
+			const start = header.offsetTop;
+			const progress = Math.min(Math.max((window.scrollY - start) / 220, 0), 1);
+			hero.style.setProperty('--reveal', progress.toFixed(3));
+			hero.classList.toggle('is-revealed', progress > 0.05);
+		};
+
+		updateHeroScroll();
+		window.addEventListener('scroll', updateHeroScroll, { passive: true });
+		window.addEventListener('resize', updateHeroScroll, { passive: true });
+	}
 }
 
 if (document.readyState === 'loading') {
