@@ -1,9 +1,32 @@
+function wrapIntroQuoteCharacters() {
+	const introQuote = document.querySelector('.intro-quote');
+	if (!introQuote || introQuote.dataset.charsWrapped === 'true') {
+		return;
+	}
+
+	const text = introQuote.textContent;
+	introQuote.textContent = '';
+
+	const fragment = document.createDocumentFragment();
+	[...text].forEach((char) => {
+		const span = document.createElement('span');
+		span.className = 'char';
+		span.textContent = char === ' ' ? '\u00A0' : char;
+		fragment.appendChild(span);
+	});
+
+	introQuote.appendChild(fragment);
+	introQuote.dataset.charsWrapped = 'true';
+}
+
 function initializeMenu() {
 	const menuButton = document.querySelector('.menu-button');
 	const topMenu = document.querySelector('#top-menu');
 	const topBar = document.querySelector('.top-bar');
 	const topLogo = document.querySelector('.top-logo');
 	const hero = document.querySelector('.hero');
+
+	wrapIntroQuoteCharacters();
 
 	if (!topBar || !topLogo) {
 		return;
