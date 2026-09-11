@@ -1,0 +1,12 @@
+.courses-section{
+    width: 100%;
+    max-width: 1200px;
+    place-self: center;
+}
+
+.courses-section h2{
+    font-size: clamp(100px, 2.5rem, 50%);
+    margin: 0;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
