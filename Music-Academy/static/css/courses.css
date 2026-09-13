@@ -1,12 +1,36 @@
-.courses-section{
+.courses-section {
     width: 100%;
     max-width: 1200px;
     place-self: center;
 }
 
-.courses-section h2{
+.courses-section h2 {
     font-size: clamp(100px, 2.5rem, 50%);
     margin: 0;
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/*build your sound*/
+
+.handwriting {
+    fill: none;
+    stroke: #5e2724;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    opacity: 0;
+    transition: stroke-dashoffset 1.4s ease, opacity 0.7s ease;
+}
+
+.handwriting.draw {
+    stroke-dashoffset: 0;
+    opacity: 1;
+}
+
+.handwriting:not(.draw) {
+    stroke-dashoffset: 3000;
+    opacity: 0;
 }

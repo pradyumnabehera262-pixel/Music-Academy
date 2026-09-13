@@ -69,3 +69,23 @@ if (document.readyState === 'loading') {
 } else {
 	initializeMenu();
 }
+
+const customSvg = document.getElementById("customSvg");
+const buildYourSound = document.getElementById("buildYourSound");
+
+if (customSvg && buildYourSound) {
+    const svgObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                buildYourSound.classList.add('draw');
+            } else {
+                buildYourSound.classList.remove('draw');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px'
+    });
+
+    svgObserver.observe(customSvg);
+}
