@@ -13,6 +13,11 @@ body {
     color: #222;
     font-family: 'montserrat', Arial, sans-serif;
 }
+body::selection{
+    background-color: #502c2ce9;
+    color: #e1d3d3;
+    
+}
 
 /*---------------------------------------------------------
                         HEADER SECTION             
