@@ -1,3 +1,6 @@
+ html {
+    scroll-behavior: smooth;
+}   
 .intro-container {
     position: relative;
     width: 100%;
@@ -93,4 +96,25 @@
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
     border-radius: 999px;
     padding: 14px 22px;
+}
+#footer{
+    min-height: 12rem; background-color:#e4c884;
+}
+
+#footer .footer-container .footer-main {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+   
+   
+}
+#footer .menu{
+    display:     flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#footer .social-media{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
