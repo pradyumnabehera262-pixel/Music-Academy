@@ -119,6 +119,49 @@ body::selection{
     opacity: 1;
 }
 
+.top-social {
+    position: absolute;
+    top: 50%;
+    left: calc(3vh + clamp(40px, 5vw, 70px) + 18px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(-50%);
+    opacity: 0;
+    animation: top-social-reveal 500ms ease-out 2.8s forwards;
+}
+
+.top-social a {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.top-social a:hover,
+.top-social a:focus-visible {
+    color: #502c2c;
+    background-color: #fff8ca;
+    transform: translateY(-2px);
+}
+
+@keyframes top-social-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
 .top-bar.reveal-complete {
     animation: none;
 }
@@ -232,6 +275,10 @@ body::selection{
 @media (max-width: 768px) {
     .hero {
         padding: 16px;
+    }
+
+    .top-social {
+        display: none;
     }
 
     .hero-stage {
