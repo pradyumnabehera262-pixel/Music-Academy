@@ -318,7 +318,7 @@
         </section>
 
 
-        <section class="Instructors-section"> <!--instructors section -->
+        <section class="instructors-section"> <!--instructors section -->
             <div>
                 <menu> <!--instruments menu cards for categorized instructors-->
                     <span><img src="" alt=""></span>
@@ -330,7 +330,7 @@
                     <!--add instructor cards here using a loop -->
                     {%for instructor in instructors%}
                     <article class="instructor">
-                        <img src="{{url_for('static', filename=instructur.photo)}}" alt="{{instructor.name}}">
+                        <img src="{{url_for('static', filename=instructor.photo)}}" alt="{{instructor.name}}">
 
                         <h3>{{ instructor.name }}</h3>
                         <p>{{ instructor.instrument }}</p>
@@ -340,6 +340,9 @@
                     {% else %}
                     <p>no instructors have been added yet.</p>
                     {% endfor %}
+                </div>
+                <div class="show-all">
+                    <button>Show all instructors</button>
                 </div>
             </div>
         </section>

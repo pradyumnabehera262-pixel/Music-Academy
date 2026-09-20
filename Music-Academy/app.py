@@ -21,9 +21,6 @@ class Instructor(db.Model):  #a instruction class that controls the database
     bio = db.Column(db.Text)  #bio: Piano instructor with 8 years of experience.
     photo = db.Column(db.String(250))   #photo: images/instructors/sarah.jpg
 
-with app.app_context():
-    db.create_all()
-
 @app.route('/')
 def home():
     instructors = Instructor.query.all()  #a variable holds a packet of query that have all data of particular database
@@ -31,7 +28,6 @@ def home():
 
 def main():
     app.run(host = '0.0.0.0', port = 5000, debug = True)
-
 
 if __name__ == '__main__':
     main()
