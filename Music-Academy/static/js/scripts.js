@@ -232,17 +232,19 @@ function initializeSpecialEvents() {
 }
 
 function initializeEventNotifications() {
+	const track = document.querySelector('.events-notification-track');
 	const notifications = [...document.querySelectorAll('.events-notification')];
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-	if (notifications.length < 2) {
+	if (!track || notifications.length < 2 || reduceMotion.matches || track.dataset.carouselInitialized === 'true') {
 		return;
 	}
 
+	track.dataset.carouselInitialized = 'true';
 	let currentIndex = 0;
 	window.setInterval(() => {
-		notifications[currentIndex].classList.remove('is-current');
 		currentIndex = (currentIndex + 1) % notifications.length;
-		notifications[currentIndex].classList.add('is-current');
+		track.style.transform = `translateX(-${currentIndex * 100}%)`;
 	}, 4200);
 }
 
