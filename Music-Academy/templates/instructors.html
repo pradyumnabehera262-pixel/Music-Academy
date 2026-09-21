@@ -19,7 +19,7 @@
 
         <div class="instructors-grid">
             {% for instructor in instructors %}
-            <article class="instructor-card full-card">
+            <article class="instructor-card full-card is-visible">
                 <img src="{{ url_for('static', filename=instructor.photo) }}" alt="{{ instructor.name }}">
                 <h3>{{ instructor.name }}</h3>
                 <p><strong>{{ instructor.instrument }}</strong></p>

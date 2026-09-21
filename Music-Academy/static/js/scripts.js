@@ -215,3 +215,122 @@ if (document.readyState === 'loading') {
 } else {
 	initializeCoursePathTravelers();
 }
+
+function initializeSpecialEvents() {
+	const track = document.querySelector('.special-events-track');
+	const cards = track ? [...track.children] : [];
+
+	if (cards.length < 2) {
+		return;
+	}
+
+	let currentIndex = 0;
+	window.setInterval(() => {
+		currentIndex = (currentIndex + 1) % cards.length;
+		track.style.transform = `translateY(-${currentIndex * 100}%)`;
+	}, 3600);
+}
+
+function initializeEventNotifications() {
+	const notifications = [...document.querySelectorAll('.events-notification')];
+
+	if (notifications.length < 2) {
+		return;
+	}
+
+	let currentIndex = 0;
+	window.setInterval(() => {
+		notifications[currentIndex].classList.remove('is-current');
+		currentIndex = (currentIndex + 1) % notifications.length;
+		notifications[currentIndex].classList.add('is-current');
+	}, 4200);
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initializeSpecialEvents);
+} else {
+	initializeSpecialEvents();
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initializeEventNotifications);
+} else {
+	initializeEventNotifications();
+}
+
+
+const filterButtons = document.querySelectorAll('.instrument-item');
+const instructorCards = document.querySelectorAll('.instructor-card');
+const instructorSection = document.querySelector('.instructors-section');
+const instrumentSequence = ['Piano', 'Guitar', 'Drums', 'Voice'];
+let currentInstrumentIndex = 0;
+
+function normalizeInstrument(instrument) {
+	const normalizedInstrument = instrument.trim().toLowerCase();
+
+	if (normalizedInstrument === 'drum') {
+		return 'drums';
+	}
+
+	if (normalizedInstrument === 'vocal') {
+		return 'voice';
+	}
+
+	return normalizedInstrument;
+}
+
+function applyFilter(selectedInstrument) {
+	const selectedButton = document.querySelector(
+		`.instrument-item[data-instrument="${selectedInstrument}"]`
+	);
+	const selectedColor = selectedButton?.dataset.color || '#9d4936';
+
+	instructorSection.style.setProperty('--selected-color', selectedColor);
+	instructorSection.classList.add('is-changing');
+
+	let visibleCardCount = 0;
+	instructorCards.forEach(card => {
+		const cardInstrument = normalizeInstrument(card.dataset.instrument);
+		const matchesInstrument = selectedInstrument === 'all'
+			|| cardInstrument === normalizeInstrument(selectedInstrument);
+		const shouldShow = matchesInstrument && visibleCardCount < 2;
+
+		if (shouldShow) {
+			visibleCardCount += 1;
+		}
+
+		card.classList.remove('is-visible');
+		card.style.display = shouldShow ? 'flex' : 'none';
+
+		if (shouldShow) {
+			window.requestAnimationFrame(() => card.classList.add('is-visible'));
+		}
+	});
+
+	filterButtons.forEach(button => {
+		const isActive = button.dataset.instrument === selectedInstrument;
+		button.classList.toggle('active', isActive);
+	});
+
+	window.setTimeout(() => {
+		instructorSection.classList.remove('is-changing');
+	}, 220);
+}
+
+filterButtons.forEach(button => {
+	button.addEventListener('click', () => {
+		const selectedIndex = instrumentSequence.indexOf(button.dataset.instrument);
+		if (selectedIndex !== -1) {
+			currentInstrumentIndex = selectedIndex;
+		}
+		applyFilter(button.dataset.instrument);
+	});
+});
+
+function moveToNextInstrument() {
+	currentInstrumentIndex = (currentInstrumentIndex + 1) % instrumentSequence.length;
+	applyFilter(instrumentSequence[currentInstrumentIndex]);
+}
+
+applyFilter(instrumentSequence[currentInstrumentIndex]);
+window.setInterval(moveToNextInstrument, 3500);

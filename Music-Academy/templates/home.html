@@ -328,6 +328,11 @@
                 <i class="fa-solid fa-music floating-note note-five"></i>
                 <i class="fa-solid fa-music floating-note note-six"></i>
             </div>
+            <div class="instructors-heading">
+                <span class="instructors-kicker">Learn from the masters</span>
+                <h2>Meet the Soundmakers</h2>
+                <p>Find the guide who can help your music find its voice.</p>
+            </div>
             <div class="instructors-layout">
                 <div class="instrument-menu" aria-label="Instructor filters">
                     <button type="button" class="instrument-item" data-instrument="Piano" data-color="#9d4936"><i
@@ -363,93 +368,97 @@
             </div>
 
             <div class="show-all">
-                <button type="button" class="show-all-btn" data-instrument="all">Show all instructors</button>
+                <a class="show-all-btn" href="{{ url_for('all_instructors') }}">Show all instructors</a>
             </div>
         </section>
 
-        <script>
-            const filterButtons = document.querySelectorAll('.instrument-item');
-            const instructorCards = document.querySelectorAll('.instructor-card');
-            const showAllButton = document.querySelector('.show-all-btn');
-            const instructorSection = document.querySelector('.instructors-section');
-            const instrumentSequence = ['Piano', 'Guitar', 'Drums', 'Voice'];
-            let currentInstrumentIndex = 0;
-
-            function applyFilter(selectedInstrument) {
-                const selectedButton = document.querySelector(
-                    `.instrument-item[data-instrument="${selectedInstrument}"]`
-                );
-                const selectedColor = selectedButton?.dataset.color || '#9d4936';
-
-                instructorSection.style.setProperty('--selected-color', selectedColor);
-                instructorSection.classList.add('is-changing');
-
-                instructorCards.forEach(card => {
-                    const cardInstrument = card.dataset.instrument;
-                    const shouldShow = selectedInstrument === 'all' || cardInstrument === selectedInstrument;
-
-                    card.classList.remove('is-visible');
-                    card.style.display = shouldShow ? 'flex' : 'none';
-
-                    if (shouldShow) {
-                        window.requestAnimationFrame(() => card.classList.add('is-visible'));
-                    }
-                });
-
-                filterButtons.forEach(button => {
-                    const isActive = button.dataset.instrument === selectedInstrument;
-                    button.classList.toggle('active', isActive);
-                });
-
-                window.setTimeout(() => {
-                    instructorSection.classList.remove('is-changing');
-                }, 220);
-            }
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const selectedIndex = instrumentSequence.indexOf(button.dataset.instrument);
-                    if (selectedIndex !== -1) {
-                        currentInstrumentIndex = selectedIndex;
-                    }
-                    applyFilter(button.dataset.instrument);
-                });
-            });
-
-            if (showAllButton) {
-                showAllButton.addEventListener('click', () => applyFilter('all'));
-            }
-
-            function moveToNextInstrument() {
-                currentInstrumentIndex = (currentInstrumentIndex + 1) % instrumentSequence.length;
-                applyFilter(instrumentSequence[currentInstrumentIndex]);
-            }
-
-            applyFilter(instrumentSequence[currentInstrumentIndex]);
-            window.setInterval(moveToNextInstrument, 3500);
-        </script>
-
 
         <section class="events-section"> <!--events and functions section-->
+            <div class="events-heading">
+                <span class="events-kicker">The academy calendar</span>
+                <h2>Where the Music Happens</h2>
+                <p>From intimate workshops to full-stage celebrations, there is always a rhythm ahead.</p>
+            </div>
             <div class="events-container"> <!--events container-->
                 <div class="upcoming-events"> <!--upcoming events-->
                     <h2>Upcoming Events</h2>
                     <div class="upcoming-events-wrapper">
-
+                        <article class="upcoming-event-card">
+                            <div class="event-date"><span>18</span><small>OCT</small></div>
+                            <div class="event-card-content">
+                                <span class="event-label">Next on stage</span>
+                                <h3>Autumn Student Showcase</h3>
+                                <p>Our students bring their newest pieces to the stage for an evening of live music.</p>
+                                <span class="event-meta"><i class="fa-regular fa-clock"></i> 6:30 PM &nbsp; <i
+                                        class="fa-solid fa-location-dot"></i> Main Hall</span>
+                            </div>
+                            <i class="fa-solid fa-music event-card-note" aria-hidden="true"></i>
+                        </article>
                     </div>
                 </div> <!--upcoming events ends here-->
 
                 <div class="special-events"> <!--special events-->
                     <h2>Special Events</h2>
                     <div class="special-events-wrapper">
-
+                        <div class="special-events-track">
+                            <article class="special-event-card">
+                                <span class="event-date-small">NOV 02</span>
+                                <h3>Songwriting Circle</h3>
+                                <p>Bring an idea, leave with a song.</p>
+                            </article>
+                            <article class="special-event-card">
+                                <span class="event-date-small">DEC 14</span>
+                                <h3>Winter Jam Night</h3>
+                                <p>An open stage for every sound.</p>
+                            </article>
+                            <article class="special-event-card">
+                                <span class="event-date-small">JAN 18</span>
+                                <h3>Masterclass Weekend</h3>
+                                <p>Learn directly from visiting artists.</p>
+                            </article>
+                        </div>
                     </div>
                 </div> <!--special events ends here-->
 
                 <div class="events-functions"> <!--events and functions-->
                     <h2>Events & Functions</h2>
                     <div class="events-functions-wrapper">
-
+                        <div class="events-notifications" aria-label="Year-round events">
+                            <div class="events-notification-track">
+                                <article class="events-notification is-current">
+                                    <i class="fa-solid fa-microphone-lines notification-icon" aria-hidden="true"></i>
+                                    <div>
+                                        <span class="notification-label">Every first Friday</span>
+                                        <h3>Open Mic Night</h3>
+                                        <p>Take the stage, try something new, and share your sound.</p>
+                                    </div>
+                                </article>
+                                <article class="events-notification">
+                                    <i class="fa-solid fa-flask notification-icon" aria-hidden="true"></i>
+                                    <div>
+                                        <span class="notification-label">Monthly session</span>
+                                        <h3>Theory Lab</h3>
+                                        <p>Turn musical ideas into practical skills you can use.</p>
+                                    </div>
+                                </article>
+                                <article class="events-notification">
+                                    <i class="fa-solid fa-users notification-icon" aria-hidden="true"></i>
+                                    <div>
+                                        <span class="notification-label">Every Saturday</span>
+                                        <h3>Ensemble Practice</h3>
+                                        <p>Build your timing, confidence, and connection with other musicians.</p>
+                                    </div>
+                                </article>
+                                <article class="events-notification">
+                                    <i class="fa-solid fa-sun notification-icon" aria-hidden="true"></i>
+                                    <div>
+                                        <span class="notification-label">July celebration</span>
+                                        <h3>Summer Concert</h3>
+                                        <p>A full academy celebration for students, families, and friends.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
                     </div>
                 </div> <!--events and functions ends here-->
             </div> <!--events container ends here-->
