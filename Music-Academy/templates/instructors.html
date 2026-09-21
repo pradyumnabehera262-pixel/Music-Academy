@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Instructors</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/courses.css">
+    <link rel="stylesheet" href="../static/css/style2.css">
+</head>
+
+<body>
+    <main class="all-instructors-page">
+        <div class="page-header">
+            <h1>All Instructors</h1>
+            <a href="/" class="back-btn">Back to home</a>
+        </div>
+
+        <div class="instructors-grid">
+            {% for instructor in instructors %}
+            <article class="instructor-card full-card">
+                <img src="{{ url_for('static', filename=instructor.photo) }}" alt="{{ instructor.name }}">
+                <h3>{{ instructor.name }}</h3>
+                <p><strong>{{ instructor.instrument }}</strong></p>
+                <p>{{ instructor.bio }}</p>
+            </article>
+            {% else %}
+            <p>No instructors have been added yet.</p>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+
+</html>

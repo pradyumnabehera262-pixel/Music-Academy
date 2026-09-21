@@ -22,7 +22,8 @@
                     <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
                         title="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
                     <a href="https://www.instagram.com/logicspace.career/" target="_blank" rel="noopener noreferrer"
-                        aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"
+                            aria-hidden="true"></i></a>
                     <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
                         title="Twitter"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
                 </div>
@@ -319,33 +320,114 @@
 
 
         <section class="instructors-section"> <!--instructors section -->
-            <div>
-                <menu> <!--instruments menu cards for categorized instructors-->
-                    <span><img src="" alt=""></span>
-                    <span><img src="" alt=""></span>
-                    <span><img src="" alt=""></span>
-                    <span><img src="" alt=""></span>
-                </menu>
-                <div class="instructors">
-                    <!--add instructor cards here using a loop -->
-                    {%for instructor in instructors%}
-                    <article class="instructor">
-                        <img src="{{url_for('static', filename=instructor.photo)}}" alt="{{instructor.name}}">
-
-                        <h3>{{ instructor.name }}</h3>
-                        <p>{{ instructor.instrument }}</p>
-                        <p>{{ instructor.bio }}</p>
-
-                    </article>
-                    {% else %}
-                    <p>no instructors have been added yet.</p>
-                    {% endfor %}
+            <div class="instructor-notes" aria-hidden="true">
+                <i class="fa-solid fa-music floating-note note-one"></i>
+                <i class="fa-solid fa-music floating-note note-two"></i>
+                <i class="fa-solid fa-music floating-note note-three"></i>
+                <i class="fa-solid fa-music floating-note note-four"></i>
+                <i class="fa-solid fa-music floating-note note-five"></i>
+                <i class="fa-solid fa-music floating-note note-six"></i>
+            </div>
+            <div class="instructors-layout">
+                <div class="instrument-menu" aria-label="Instructor filters">
+                    <button type="button" class="instrument-item" data-instrument="Piano" data-color="#9d4936"><i
+                            class="fa-solid fa-music instrument-icon" aria-hidden="true"></i><span>Piano</span></button>
+                    <button type="button" class="instrument-item" data-instrument="Guitar" data-color="#c8753f"><i
+                            class="fa-solid fa-guitar instrument-icon"
+                            aria-hidden="true"></i><span>Guitar</span></button>
+                    <button type="button" class="instrument-item" data-instrument="Drums" data-color="#783634"><i
+                            class="fa-solid fa-drum instrument-icon" aria-hidden="true"></i><span>Drums</span></button>
+                    <button type="button" class="instrument-item" data-instrument="Voice" data-color="#a6535e"><i
+                            class="fa-solid fa-microphone instrument-icon"
+                            aria-hidden="true"></i><span>Voice</span></button>
                 </div>
-                <div class="show-all">
-                    <button>Show all instructors</button>
+
+                <div class="instructors-preview">
+                    {% if instructors %}
+                    {% for instructor in instructors %}
+                    <article class="instructor-card" data-instrument="{{ instructor.instrument }}">
+                        <img src="{{ url_for('static', filename=instructor.photo) }}" alt="{{ instructor.name }}">
+                        <div class="instructor-card-body">
+                            <div class="instructor-card-header">
+                                <h3>{{ instructor.name }}</h3>
+                                <span class="instructor-tag">{{ instructor.instrument }}</span>
+                            </div>
+                            <p>{{ instructor.bio }}</p>
+                        </div>
+                    </article>
+                    {% endfor %}
+                    {% else %}
+                    <p>No instructors available for this instrument yet.</p>
+                    {% endif %}
                 </div>
             </div>
+
+            <div class="show-all">
+                <button type="button" class="show-all-btn" data-instrument="all">Show all instructors</button>
+            </div>
         </section>
+
+        <script>
+            const filterButtons = document.querySelectorAll('.instrument-item');
+            const instructorCards = document.querySelectorAll('.instructor-card');
+            const showAllButton = document.querySelector('.show-all-btn');
+            const instructorSection = document.querySelector('.instructors-section');
+            const instrumentSequence = ['Piano', 'Guitar', 'Drums', 'Voice'];
+            let currentInstrumentIndex = 0;
+
+            function applyFilter(selectedInstrument) {
+                const selectedButton = document.querySelector(
+                    `.instrument-item[data-instrument="${selectedInstrument}"]`
+                );
+                const selectedColor = selectedButton?.dataset.color || '#9d4936';
+
+                instructorSection.style.setProperty('--selected-color', selectedColor);
+                instructorSection.classList.add('is-changing');
+
+                instructorCards.forEach(card => {
+                    const cardInstrument = card.dataset.instrument;
+                    const shouldShow = selectedInstrument === 'all' || cardInstrument === selectedInstrument;
+
+                    card.classList.remove('is-visible');
+                    card.style.display = shouldShow ? 'flex' : 'none';
+
+                    if (shouldShow) {
+                        window.requestAnimationFrame(() => card.classList.add('is-visible'));
+                    }
+                });
+
+                filterButtons.forEach(button => {
+                    const isActive = button.dataset.instrument === selectedInstrument;
+                    button.classList.toggle('active', isActive);
+                });
+
+                window.setTimeout(() => {
+                    instructorSection.classList.remove('is-changing');
+                }, 220);
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedIndex = instrumentSequence.indexOf(button.dataset.instrument);
+                    if (selectedIndex !== -1) {
+                        currentInstrumentIndex = selectedIndex;
+                    }
+                    applyFilter(button.dataset.instrument);
+                });
+            });
+
+            if (showAllButton) {
+                showAllButton.addEventListener('click', () => applyFilter('all'));
+            }
+
+            function moveToNextInstrument() {
+                currentInstrumentIndex = (currentInstrumentIndex + 1) % instrumentSequence.length;
+                applyFilter(instrumentSequence[currentInstrumentIndex]);
+            }
+
+            applyFilter(instrumentSequence[currentInstrumentIndex]);
+            window.setInterval(moveToNextInstrument, 3500);
+        </script>
 
 
         <section class="events-section"> <!--events and functions section-->
@@ -374,29 +456,29 @@
         </section>
 
 
-        <section class="featured-classes-section">  <!--featured-classes-section-->
+        <section class="featured-classes-section"> <!--featured-classes-section-->
 
-        </section>  <!--featured-classes-section ends here-->
+        </section> <!--featured-classes-section ends here-->
 
     </main>
 
 
-    <footer id ="footer">
+    <footer id="footer">
         <div class="footer-container">
             <div class="footer-banner">
 
             </div>
             <div class="footer-main">
                 <div class="menu">
-                        <a href="#top-menu">Home</a>
-                        <a class="opt" href="">About</a>
-                        <a class="opt" href="">Courses</a>
-                        <a class="opt" href="">Contact</a>
-                        <a class="apply-btn">Apply For Admission</a>
-                        
+                    <a href="#top-menu">Home</a>
+                    <a class="opt" href="">About</a>
+                    <a class="opt" href="">Courses</a>
+                    <a class="opt" href="">Contact</a>
+                    <a class="apply-btn">Apply For Admission</a>
+
                 </div>
 
-                        <div class="social-media">
+                <div class="social-media">
                     <a href="https://www.facebook.com/" target="_blank">
                         <i class="fa-brands fa-facebook"></i>facebook
                     </a>
@@ -409,18 +491,18 @@
                         <i class="fa-brands fa-x"></i> twitter
                     </a>
 
-                       
+
                 </div>
                 <div class="contacts">
                     <p> <i class="fa-solid fa-envelope"></i>
-                       EMAIL:
+                        EMAIL:
                         <a href="mailto:example@gmail.com">
                             example@gmail.com</a>
-                        
+
                     </p>
                     <p> <i class="fa-solid fa-phone"></i>
                         PHONE:
-                    <a href="tel:+919876543210">+91 98765 43210</a>
+                        <a href="tel:+919876543210">+91 98765 43210</a>
                     </p>
                 </div>
 
