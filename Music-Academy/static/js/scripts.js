@@ -362,7 +362,8 @@ function previousClassCard() {
 };
 
 function updateClassesCarousel() {
-	track.style.transform = `translateX(-${currentIndex * 100}%)`;
+	const slideWidth = 100 / track.children.length;
+	track.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
 };
 
 rightBtn.addEventListener("click", ()=> {
