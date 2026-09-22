@@ -336,3 +336,53 @@ function moveToNextInstrument() {
 
 applyFilter(instrumentSequence[currentInstrumentIndex]);
 window.setInterval(moveToNextInstrument, 3500);
+
+
+// featured class section state change logic
+
+let currentIndex = 0;
+const track = document.querySelector(".track-week-class");
+const rightBtn = document.querySelector(".right-button");
+const leftBtn = document.querySelector(".left-button");
+
+function nextClassCard() {
+	currentIndex++;
+	if (currentIndex > 6) {
+		currentIndex = 0;
+	}
+	updateClassesCarousel();
+};
+
+function previousClassCard() {
+	currentIndex--;
+	if (currentIndex < 0) {
+		currentIndex = 6;
+	}
+	updateClassesCarousel();
+};
+
+function updateClassesCarousel() {
+	track.style.transform = `translateX(-${currentIndex * 100}%)`;
+};
+
+rightBtn.addEventListener("click", ()=> {
+	nextClassCard();
+	clearInterval(autoSlide);
+	startAutoSlide();
+
+});
+
+leftBtn.addEventListener("click", ()=> {
+	previousClassCard();
+	clearInterval(autoSlide);
+	startAutoSlide();
+});
+
+let autoSlide;
+function startAutoSlide() {
+	autoSlide = setInterval(() => {
+		nextClassCard();
+	}, 4000);
+};
+
+startAutoSlide();

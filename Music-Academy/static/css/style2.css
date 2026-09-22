@@ -151,3 +151,56 @@
 }
 
 
+/* featured-classes section*/
+.featured-classes-section{
+    width: 100%;
+    justify-items: center;
+}
+
+.classes-container{
+    max-width: 1200px;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    min-height: 300px;
+}
+
+.head-page{
+    background-image: linear-gradient(150deg, #2d1c1b 50%, #5e2724 100% );
+}
+
+.monday-classes{
+    background-image: linear-gradient(150deg, #5e2724 50%, #722f2f 100% );
+}
+
+.tuesday-classes{
+    background-image: linear-gradient(150deg, #722f2f 50%, #9d4936 100% );
+}
+
+.wednesday-classes{
+    background-image: linear-gradient(150deg, #9d4936 50%, #c8753f 100% );
+}
+
+.thursday-classes{
+    background-image: linear-gradient(150deg, #c8753f 50%, #ffd59a 100% );
+}
+
+.friday-classes{
+    background-image: linear-gradient(150deg, #ffd59a 50%, #e4c884 100% );
+}
+
+.saturday-classes{
+    background-image: linear-gradient(150deg, #e4c884 50%, #fff8ca 100% );
+}
+
+.viewport-featured-class{
+    overflow: hidden;
+}
+
+.track-week-class{
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.class-card{
+    flex: 0 0 100%;
+}
