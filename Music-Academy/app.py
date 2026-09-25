@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request
+from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -26,6 +27,25 @@ class Instructor(db.Model):
 with app.app_context():
     db.create_all()
 
+
+assets = Environment(app)
+
+css_bundle = Bundle(
+    'css/styles.css',
+    'css/style2.css',
+    'css/courses.css',
+    filters = 'rcssmin',
+    output = 'gen/packed.css'
+)
+
+js_bundle = Bundle(
+    'js/scripts.js',
+    filters = 'jsmin',
+    output = 'gen/packed.js'
+)
+
+assets.register('main_css', css_bundle)
+assets.register('main_js', js_bundle)
 
 @app.route('/')
 def home():

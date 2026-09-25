@@ -4,10 +4,19 @@
     place-self: center;
 }
 
+.courses-section h3{
+    font-size: clamp(1rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin: 80px 0 0 0;
+    color: #3d201d;
+    text-align: center;
+}
+
 .courses-section h2 {
     font-size: clamp(2.5rem, 5vw, 6rem);
     line-height: 1.1;
     margin: 0;
+    color: #3d201d;
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -369,6 +378,7 @@
 @media (max-width: 768px) {
     .courses-container {
         padding: 0 0.75rem 2.5rem;
+        user-select: none;
     }
 
     .path {

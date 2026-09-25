@@ -6,7 +6,6 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-
 }
 
 body {
@@ -19,6 +18,13 @@ body::selection {
     background-color: #502c2ce9;
     color: #e1d3d3;
 
+}
+
+button,
+a,
+header {
+    user-select: none;
+    touch-action: manipulation;
 }
 
 /*---------------------------------------------------------
@@ -470,6 +476,7 @@ body::selection {
     border-bottom: 1px solid color-mix(in srgb, var(--selected-color) 70%, #fff8ca);
     box-shadow: 0 12px 30px rgba(80, 44, 44, 0.08);
     transition: background 600ms ease, border-color 600ms ease, box-shadow 600ms ease;
+    will-change: transform;
 }
 
 .instructor-notes {
@@ -1281,6 +1288,9 @@ body::selection {
     position: relative;
     cursor: pointer;
     white-space: normal;
+    user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
 }
 
 .intro .special-paragraph:hover {
@@ -1297,13 +1307,16 @@ body::selection {
 
 .intro .special-paragraph:hover .char {
     color: rgba(216, 170, 168, 0.8);
+    -webkit-touch-callout: none;
 }
 
 .intro .special-paragraph .char:hover {
     transform: translateY(-8px);
     color: #edd5d5;
     text-shadow: 0 0 14px rgba(255, 248, 202, 0.65);
+    -webkit-touch-callout: none;
 }
+
 
 .music-emoji-wrap {
     display: flex;
