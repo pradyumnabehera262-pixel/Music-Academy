@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admission Form</title>
-    <link rel="stylesheet" href="D:\music academy\Music-Academy\Music-Academy\static\css\registration.css">
+    <link rel="stylesheet" href="../static/css/registration.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -14,91 +14,156 @@
             <form action="">  
 
                  <div class="input-name">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-user user"></i>
                     <input type="text" placeholder="First Name" class="name">
 
                     <span>
-                        <i class="fa fa-user"></i>
-                        <input type="text" placeholder="Last Name" class="text-name">
+                        <i class="fa fa-user user"></i>
+                        <input type="text" placeholder="Last Name" class="name">
                     </span>
                  </div>
 
-                 <div class="input-name">
+                
+
+                  <div class="input-name">
                     <i class="fa fa-envelope email"></i>
                     <input type="email" placeholder="email" class="text-name">
                  </div>
 
                  <div class="input-name">
-                    <i class="fa fa-lock lock"></i>
-                    <input type="password" placeholder="Password" class="text-name">
+                    <i class="fa fa-phone phone"></i>
+                    <input type="tel" placeholder="Phone Number" class="text-name">
                  </div>
 
-                 <div class="input-name">
-                    <i class="fa fa-lock lock"></i>
-                    <input type="password" placeholder="Confirm Password" class="text-name">
+                 
+                 <div class="input-name" id="country">
+                    <!-- <label for="country" class="">Country</label> -->
+
+                    <select id="country" name="country">
+                           <option value="">-- Select Country --</option>
+
+                           <option value="India">India</option>
+                           <option value="United States">United States</option>  
+                           <option value="United Kingdom">United Kingdom</option>
+                           <option value="Canada">Canada</option>
+                           <option value="Australia">Australia</option>
+                           <option value="New Zealand">New Zealand</option>
+
+                           <option value="Germany">Germany</option>
+                           <option value="France">France</option>
+                           <option value="Italy">Italy</option>
+                           <option value="Spain">Spain</option>
+                           <option value="Netherlands">Netherlands</option>
+                           <option value="Switzerland">Switzerland</option>
+
+                           <option value="Japan">Japan</option>
+                           <option value="South Korea">South Korea</option>
+                           <option value="China">China</option>
+                           <option value="Singapore">Singapore</option>
+                           <option value="Malaysia">Malaysia</option>
+                           <option value="Thailand">Thailand</option>
+
+                           <option value="United Arab Emirates">United Arab Emirates</option>
+                           <option value="Saudi Arabia">Saudi Arabia</option>
+                           <option value="Qatar">Qatar</option>
+
+                           <option value="South Africa">South Africa</option>
+                           <option value="Nigeria">Nigeria</option>
+                           <option value="Egypt">Egypt</option>
+
+                           <option value="Brazil">Brazil</option>
+                           <option value="Mexico">Mexico</option>
+                           <option value="Argentina">Argentina</option>
+
+                           <option value="Other">Other</option>
+                     </select>
+
+                     <div class="arrow"></div>
+                  </div>
+
+
+
+                   <div class="input-name" id="course">
+                     <!-- <label for="main-subject">Choose Your Main Subject</label> -->
+
+                     <select id="main-subject" name="main-subject" required aria-controls="secondary-section" aria-describedby="secondary-help">
+
+                        <option value="">-- Select a subject --</option>
+
+                         <option value="vocal">Vocal</option>
+                         <option value="guitar">Guitar</option>
+                         <option value="piano">Piano</option>
+                         <option value="violin">Violin</option>
+                         <option value="drums">Drums</option>
+                         <option value="production">Music Production</option>
+
+                     </select>
+
+                     <div class="arrow"></div>
                  </div>
 
-                 <div class="input-name">
-                    <i class="fa fa-phone"></i>
-                    <input type="tel" placeholder="Phone Number">
-                 </div>
+                 <!-- Secondary Subjects -->
 
-                 <div class="input-text">
-                    <input type="radio" class="radio-button" name="r1">
-                    <label>Male</label>
+                  <div id="secondary-section" class="input-name" hidden role="group" aria-labelledby="secondary-heading">
 
-                    <input type="radio" class="radio-button" name="r1">
-                    <label>Female</label>
-                 </div>
-                 <div class="input-name">
-                    <label for="country">Country</label>
+                     <h3 id="secondary-heading">Choose Secondary Subjects</h3>
+                     <p id="secondary-help">You can select more than one.</p>
 
-                 <select id="country" name="country">
-                    <option value="">-- Select Country --</option>
-
-                    <option value="India">India</option>
-                    <option value="United States">United States</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Australia">Australia</option>
-                    <option value="New Zealand">New Zealand</option>
-
-                    <option value="Germany">Germany</option>
-                    <option value="France">France</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Spain">Spain</option>
-                    <option value="Netherlands">Netherlands</option>
-                    <option value="Switzerland">Switzerland</option>
-
-                    <option value="Japan">Japan</option>
-                    <option value="South Korea">South Korea</option>
-                    <option value="China">China</option>
-                    <option value="Singapore">Singapore</option>
-                    <option value="Malaysia">Malaysia</option>
-                    <option value="Thailand">Thailand</option>
-
-                    <option value="United Arab Emirates">United Arab Emirates</option>
-                    <option value="Saudi Arabia">Saudi Arabia</option>
-                    <option value="Qatar">Qatar</option>
-
-                    <option value="South Africa">South Africa</option>
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="Egypt">Egypt</option>
-
-                    <option value="Brazil">Brazil</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="Argentina">Argentina</option>
-
-                    <option value="Other">Other</option>
-                  </select>
+                     <div id="secondary-subjects" aria-live="polite">
+                           <!-- JavaScript will add subjects here -->
+                        </div>
 
                   </div>
-                    
-                 
-            
 
+
+                  <div class="input-name gender-section">
+                     <h3>Choose Your Gender</h3>
+                     <div class="gender-options">
+                        <label class="gender-card gender-male">
+                           <input type="radio" class="radio-button" name="gender" value="male" required>
+                           <span class="gender-symbol" aria-hidden="true">&#9794;</span>
+                           <span class="gender-card-content">
+                              <strong>Male</strong>
+                              <small>Male student</small>
+                           </span>
+                        </label>
+
+                        <label class="gender-card gender-female">
+                           <input type="radio" class="radio-button" name="gender" value="female">
+                           <span class="gender-symbol" aria-hidden="true">&#9792;</span>
+                           <span class="gender-card-content">
+                              <strong>Female</strong>
+                              <small>Female student</small>
+                           </span>
+                        </label>
+                     </div>
+                  </div>
+                     
+
+                  <div class="input-name consultation-terms">
+                     <details class="terms-details">
+                        <summary class="terms-summary">Free Consultation Terms</summary>
+                        <p class="terms-copy" id="consultation-terms-copy">
+                           The initial music consultation is free and carries no obligation to enroll. We will use your contact details only to arrange and follow up on this consultation. Please provide accurate information; appointment times are subject to availability, and you can contact us to reschedule or cancel.
+                        </p>
+                     </details>
+                     <label class="terms-consent" for="terms-accepted">
+                        <input type="checkbox" class="check-button" id="terms-accepted" name="terms-accepted" required aria-describedby="consultation-terms-copy">
+                        <span class="checkmark" aria-hidden="true"></span>
+                        <span class="consent-label">I have read and agree to the free consultation terms.</span>
+                     </label>
+                  </div>
+
+                  <div class="input-name register-action">
+                     <input type="submit" value="Register" class="button">
+                  </div>
+                 
+                 
             </form>
         </div>
+
     </div>
+   
+     <script src="../static/js/admsn.js"></script>
 </body>
 </html>

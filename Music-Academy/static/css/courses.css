@@ -431,3 +431,24 @@
         line-height: 1.3;
     }
 }
+
+@media (max-width: 480px) {
+    .course-card,
+    .course-card-right {
+        min-height: 0;
+        flex-direction: column;
+    }
+
+    .topic,
+    .topic-right,
+    .sub-topic,
+    .sub-topic-right {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .sub-topic span,
+    .sub-topic-right span {
+        min-width: 0;
+    }
+}

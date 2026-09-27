@@ -66,6 +66,11 @@ def home():
     )
 
 
+@app.route('/admission')
+def admission():
+    return render_template('admission.html')
+
+
 @app.route('/instructors')
 def all_instructors():
     instructors = Instructor.query.order_by(Instructor.name).all()

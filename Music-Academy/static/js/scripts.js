@@ -64,11 +64,47 @@ function initializeMenu() {
 	}
 }
 
+function initializeAdmissionDialog() {
+	const admissionDialog = document.querySelector('#admission-dialog');
+	const closeButton = document.querySelector('[data-close-admission]');
+	const openButtons = document.querySelectorAll('[data-open-admission]');
+
+	if (!admissionDialog || typeof admissionDialog.showModal !== 'function') {
+		return;
+	}
+
+	openButtons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const topMenu = document.querySelector('#top-menu');
+			const topBar = document.querySelector('.top-bar');
+			const menuButton = document.querySelector('.menu-button');
+
+			if (topMenu?.classList.contains('is-open')) {
+				topMenu.classList.remove('is-open');
+				topBar?.classList.remove('menu-open');
+				menuButton?.setAttribute('aria-expanded', 'false');
+				menuButton?.setAttribute('aria-label', 'Open navigation menu');
+			}
+
+			admissionDialog.showModal();
+		});
+	});
+
+	closeButton?.addEventListener('click', () => admissionDialog.close());
+	admissionDialog.addEventListener('click', (event) => {
+		if (event.target === admissionDialog) {
+			admissionDialog.close();
+		}
+	});
+}
+
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initializeMenu);
 } else {
 	initializeMenu();
 }
+
+initializeAdmissionDialog();
 
 const customSvg = document.getElementById("customSvg");
 const buildYourSound = document.getElementById("buildYourSound");
@@ -281,6 +317,7 @@ function normalizeInstrument(instrument) {
 	return normalizedInstrument;
 }
 
+if (instructorSection) {
 function applyFilter(selectedInstrument) {
 	const selectedButton = document.querySelector(
 		`.instrument-item[data-instrument="${selectedInstrument}"]`
@@ -336,6 +373,7 @@ function moveToNextInstrument() {
 
 applyFilter(instrumentSequence[currentInstrumentIndex]);
 window.setInterval(moveToNextInstrument, 3500);
+}
 
 
 // featured class section state change logic
@@ -345,6 +383,7 @@ const track = document.querySelector(".track-week-class");
 const rightBtn = document.querySelector(".right-button");
 const leftBtn = document.querySelector(".left-button");
 
+if (track && rightBtn && leftBtn) {
 function nextClassCard() {
 	currentIndex++;
 	if (currentIndex > 6) {
@@ -387,3 +426,4 @@ function startAutoSlide() {
 };
 
 startAutoSlide();
+}

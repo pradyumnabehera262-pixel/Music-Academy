@@ -41,7 +41,7 @@
                     <a class="opt" href="">About</a>
                     <a class="opt" href="">Courses</a>
                     <a class="opt" href="">Contact</a>
-                    <a class="apply-btn">Apply For Admission</a>
+                    <button class="apply-btn admission-trigger" type="button" data-open-admission aria-haspopup="dialog" aria-controls="admission-dialog">Apply For Admission</button>
                 </menu>
             </div> <!--top bar ends here-->
             <div class="hero-stage">
@@ -474,7 +474,7 @@
                     <a class="opt" href="">About</a>
                     <a class="opt" href="">Courses</a>
                     <a class="opt" href="">Contact</a>
-                    <a class="apply-btn">Apply For Admission</a>
+                    <button class="apply-btn admission-trigger" type="button" data-open-admission aria-haspopup="dialog" aria-controls="admission-dialog">Apply For Admission</button>
 
                 </div>
 
@@ -524,6 +524,7 @@
         </div>
         <p>&copy; 2024 Music Academy. All rights reserved.</p>
     </footer>
+    {% include "admission_modal.html" %}
     {% assets "main_js" %}
     <script src="{{ASSET_URL}}"></script>
     {% endassets %}

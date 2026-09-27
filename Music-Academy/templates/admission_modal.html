@@ -1,0 +1,9 @@
+<dialog class="admission-dialog" id="admission-dialog" aria-labelledby="admission-modal-title">
+    <div class="admission-dialog-header">
+        <h2 id="admission-modal-title">Music Academy Admission</h2>
+        <button class="admission-dialog-close" type="button" data-close-admission aria-label="Close admission form">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <iframe class="admission-frame" src="{{ url_for('admission') }}" title="Music Academy admission form"></iframe>
+</dialog>
