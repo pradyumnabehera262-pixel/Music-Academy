@@ -295,135 +295,169 @@ if (document.readyState === 'loading') {
 } else {
 	initializeEventNotifications();
 }
-
-
-const filterButtons = document.querySelectorAll('.instrument-item');
-const instructorCards = document.querySelectorAll('.instructor-card');
 const instructorSection = document.querySelector('.instructors-section');
-const instrumentSequence = ['Piano', 'Guitar', 'Drums', 'Voice'];
-let currentInstrumentIndex = 0;
-
-function normalizeInstrument(instrument) {
-	const normalizedInstrument = instrument.trim().toLowerCase();
-
-	if (normalizedInstrument === 'drum') {
-		return 'drums';
-	}
-
-	if (normalizedInstrument === 'vocal') {
-		return 'voice';
-	}
-
-	return normalizedInstrument;
-}
 
 if (instructorSection) {
-function applyFilter(selectedInstrument) {
-	const selectedButton = document.querySelector(
-		`.instrument-item[data-instrument="${selectedInstrument}"]`
-	);
-	const selectedColor = selectedButton?.dataset.color || '#9d4936';
+	const filterButtons = document.querySelectorAll('.instrument-item');
+	const instructorCards = document.querySelectorAll('.instructor-card');
+	const instrumentSequence = ['Piano', 'Guitar', 'Drums', 'Voice'];
+	let currentInstrumentIndex = 0;
 
-	instructorSection.style.setProperty('--selected-color', selectedColor);
-	instructorSection.classList.add('is-changing');
+	function normalizeInstrument(instrument) {
+		const normalizedInstrument = instrument.trim().toLowerCase();
 
-	let visibleCardCount = 0;
-	instructorCards.forEach(card => {
-		const cardInstrument = normalizeInstrument(card.dataset.instrument);
-		const matchesInstrument = selectedInstrument === 'all'
-			|| cardInstrument === normalizeInstrument(selectedInstrument);
-		const shouldShow = matchesInstrument && visibleCardCount < 2;
-
-		if (shouldShow) {
-			visibleCardCount += 1;
+		if (normalizedInstrument === 'drum') {
+			return 'drums';
 		}
 
-		card.classList.remove('is-visible');
-		card.style.display = shouldShow ? 'flex' : 'none';
-
-		if (shouldShow) {
-			window.requestAnimationFrame(() => card.classList.add('is-visible'));
+		if (normalizedInstrument === 'vocal') {
+			return 'voice';
 		}
-	});
+
+		return normalizedInstrument;
+	}
+
+	function applyFilter(selectedInstrument) {
+		const selectedButton = document.querySelector(
+			`.instrument-item[data-instrument="${selectedInstrument}"]`
+		);
+
+		const selectedColor = selectedButton?.dataset.color || '#9d4936';
+
+		instructorSection.style.setProperty('--selected-color', selectedColor);
+		instructorSection.classList.add('is-changing');
+
+		let visibleCardCount = 0;
+
+		instructorCards.forEach(card => {
+			const cardInstrument = normalizeInstrument(card.dataset.instrument);
+
+			const matchesInstrument =
+				selectedInstrument === 'all' ||
+				cardInstrument === normalizeInstrument(selectedInstrument);
+
+			const shouldShow =
+				matchesInstrument && visibleCardCount < 2;
+
+			if (shouldShow) {
+				visibleCardCount += 1;
+			}
+
+			card.classList.remove('is-visible');
+			card.style.display = shouldShow ? 'flex' : 'none';
+
+			if (shouldShow) {
+				window.requestAnimationFrame(() => {
+					card.classList.add('is-visible');
+				});
+			}
+		});
+
+		filterButtons.forEach(button => {
+			const isActive =
+				button.dataset.instrument === selectedInstrument;
+
+			button.classList.toggle('active', isActive);
+		});
+
+		window.setTimeout(() => {
+			instructorSection.classList.remove('is-changing');
+		}, 220);
+	}
 
 	filterButtons.forEach(button => {
-		const isActive = button.dataset.instrument === selectedInstrument;
-		button.classList.toggle('active', isActive);
+		button.addEventListener('click', () => {
+			const selectedIndex =
+				instrumentSequence.indexOf(button.dataset.instrument);
+
+			if (selectedIndex !== -1) {
+				currentInstrumentIndex = selectedIndex;
+			}
+
+			applyFilter(button.dataset.instrument);
+		});
 	});
 
-	window.setTimeout(() => {
-		instructorSection.classList.remove('is-changing');
-	}, 220);
-}
+	function moveToNextInstrument() {
+		currentInstrumentIndex =
+			(currentInstrumentIndex + 1) % instrumentSequence.length;
 
-filterButtons.forEach(button => {
-	button.addEventListener('click', () => {
-		const selectedIndex = instrumentSequence.indexOf(button.dataset.instrument);
-		if (selectedIndex !== -1) {
-			currentInstrumentIndex = selectedIndex;
-		}
-		applyFilter(button.dataset.instrument);
-	});
-});
+		applyFilter(instrumentSequence[currentInstrumentIndex]);
+	}
 
-function moveToNextInstrument() {
-	currentInstrumentIndex = (currentInstrumentIndex + 1) % instrumentSequence.length;
 	applyFilter(instrumentSequence[currentInstrumentIndex]);
-}
 
-applyFilter(instrumentSequence[currentInstrumentIndex]);
-window.setInterval(moveToNextInstrument, 3500);
+	window.setInterval(moveToNextInstrument, 3500);
 }
-
 
 // featured class section state change logic
-
-let currentIndex = 0;
 const track = document.querySelector(".track-week-class");
 const rightBtn = document.querySelector(".right-button");
 const leftBtn = document.querySelector(".left-button");
 
-if (track && rightBtn && leftBtn) {
-function nextClassCard() {
-	currentIndex++;
-	if (currentIndex > 6) {
-		currentIndex = 0;
-	}
-	updateClassesCarousel();
-};
+if (track && rightBtn && leftBtn){
+	let currentIndex = 0;
 
-function previousClassCard() {
-	currentIndex--;
-	if (currentIndex < 0) {
-		currentIndex = 6;
-	}
-	updateClassesCarousel();
-};
+	function nextClassCard() {
+		currentIndex++;
+		if (currentIndex > 6) {
+			currentIndex = 0;
+		}
+		updateClassesCarousel();
+	};
 
-function updateClassesCarousel() {
-	const slideWidth = 100 / track.children.length;
-	track.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
-};
+	function previousClassCard() {
+		currentIndex--;
+		if (currentIndex < 0) {
+			currentIndex = 6;
+		}
+		updateClassesCarousel();
+	};
 
-rightBtn.addEventListener("click", ()=> {
-	nextClassCard();
-	clearInterval(autoSlide);
-	startAutoSlide();
+	function updateClassesCarousel() {
+		const slideWidth = 100 / track.children.length;
+		track.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+	};
 
-});
-
-leftBtn.addEventListener("click", ()=> {
-	previousClassCard();
-	clearInterval(autoSlide);
-	startAutoSlide();
-});
-
-let autoSlide;
-function startAutoSlide() {
-	autoSlide = setInterval(() => {
+	rightBtn.addEventListener("click", ()=> {
 		nextClassCard();
-	}, 4000);
-};
+		clearInterval(autoSlide);
+		startAutoSlide();
 
-startAutoSlide();
+	});
+
+	leftBtn.addEventListener("click", ()=> {
+		previousClassCard();
+		clearInterval(autoSlide);
+		startAutoSlide();
+	});
+
+	let autoSlide;
+	function startAutoSlide() {
+		autoSlide = setInterval(() => {
+			nextClassCard();
+		}, 4000);
+	};
+
+	startAutoSlide();
 }
+
+const aboutBtn = document.querySelectorAll(".aboutBtn");
+const aboutDiv = document.getElementById("aboutDiv");
+
+if (aboutBtn.length && aboutDiv){
+	
+	aboutBtn.forEach(function(button) {
+		button.addEventListener("click", function(){
+		console.log("clicking");
+		aboutDiv.classList.add("is-visible");
+		document.body.classList.add("about-open");
+	});
+
+	aboutDiv.addEventListener("click", function(){
+		console.log("clicking");
+		aboutDiv.classList.remove("is-visible");
+		document.body.classList.remove("about-open");
+	});
+	});
+};

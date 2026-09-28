@@ -100,6 +100,7 @@
 #footer{
     min-height: 12rem; 
     background-color:#e4c884;
+    width: 100%;
 }
 
 #footer .footer-container .footer-main {
@@ -386,30 +387,13 @@
 .instructor-page-header{
     width: 100%;
     display: flex;
-    background-image: linear-gradient(140deg, #c8753f 0%, #2d1c1b var(--mid-point), #c8753f 40%);
+    background-image: linear-gradient(100deg, #a95d2b 0%, #793937 50%, #251615 100%);
     height: 130px;
     justify-content: center;
-    animation: header-stick 3s ease-in;
-}
-
-@property --mid-point{
-    syntax: '<percentage';
-    inherits: false;
-    initial-value: 40%;
-}
-
-@keyframes header-stick{
-    0%{
-        --mid-point: 40%;
-    }
-    100%{
-        --mid-point: 90%;
-    }
 }
 
 .instructor-top-bar{
     max-width: 1200px;
-    place-self: center;
 }
 
 .all-instructors-page{
@@ -420,23 +404,114 @@
 
 .page-header{
     place-items: center;
-    background-color: #c8763f9d;
+    background-color: #7a3124;
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 20px;
     transition: translate 0.3s ease;
 }
 
+.page-header h1{
+    color: #ffd9c0;
+}
+
 .page-header:hover{
     translate: 0px -5px;
 }
 
+.full-card{
+    background-image: linear-gradient(90deg, #a95d2b 0%, #7a3124 100%);
+    margin: 20px;
+}
+
+.ins-crd h3{
+    font-size: clamp(1.2rem, 4vh, 3rem);
+    color: white;
+}
+
+
+
+
 @media (max-width: 768px) {
-    .instructor-card-body p{
+    .home-instructor-card p{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     line-clamp: 5;
     overflow: hidden;
+    }
 }
+
+
+/* about popup */
+
+.about-division{
+    display: flex;
+    position: fixed;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.about-popup{
+    max-width: 1200px;
+    background-color: white;
+    margin-top: 50px;
+    height: 70vh;
+    width: 70vw;
+    padding: 50px;
+    outline: 10px solid #ebe1e059;
+    outline-offset: 0px;
+    border-radius: 30px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    transform: translateY(15px) scale(0.98);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.35s ease;
+
+}
+
+.about-popup h2{
+    font-size: clamp(1.5rem, 4vw, 4rem);
+    font-family: "Playfair Display",  serif;
+}
+.about-paragraph{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+}
+.about-paragraph p {
+    font-size: clamp(0.5rem, 2vh, 3rem);
+    gap: 5px;
+}
+
+.about-division.is-visible{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.about-division.is-visible .about-popup{
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+body.about-open{
+    overflow: hidden;
+}
+
+
+/* footer banner */
+
+.footer-banner{
+    max-width: 1200px;
+    width: 80vw;
+    place-self: center;
 }

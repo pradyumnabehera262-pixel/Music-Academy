@@ -37,9 +37,9 @@
                     <span></span>
                 </button>
                 <menu id="top-menu" class="top-menu">
-                    <a class="opt" href="">Home</a>
-                    <a class="opt" href="">About</a>
-                    <a class="opt" href="">Courses</a>
+                    <a class="opt" href="#">Home</a>
+                    <a class="opt aboutBtn">About</a>
+                    <a class="opt" href="#coursesSection">Courses</a>
                     <a class="opt" href="">Contact</a>
                     <button class="apply-btn admission-trigger" type="button" data-open-admission aria-haspopup="dialog" aria-controls="admission-dialog">Apply For Admission</button>
                 </menu>
@@ -87,11 +87,11 @@
                     </div>
                 </div>
 
-                <p class="special-paragraph intro-quote" >Your music has a story. Let’s help you play it.</p>
+                <p class="special-paragraph intro-quote">Your music has a story. Let’s help you play it.</p>
             </div>
         </section>
 
-        <section class="courses-section"> <!--courses section-->
+        <section id="coursesSection" class="courses-section"> <!--courses section-->
             <h3>MUSIC COURSES</h3>
             <h2>Discover Your Rhythm</h2>
 
@@ -275,7 +275,7 @@
                     {% for instructor in instructors %}
                     <article class="instructor-card" data-instrument="{{ instructor.instrument }}">
                         <img src="{{ url_for('static', filename=instructor.photo) }}" alt="{{ instructor.name }}">
-                        <div class="instructor-card-body">
+                        <div class="instructor-card-body home-instructor-card">
                             <div class="instructor-card-header">
                                 <h3>{{ instructor.name }}</h3>
                                 <span class="instructor-tag">{{ instructor.instrument }}</span>
@@ -466,12 +466,15 @@
     <footer id="footer">
         <div class="footer-container">
             <div class="footer-banner">
-
+                <h3>SCHOLARSHIPS OPPORTUNITY</h3>
+                <h2>Your Talent Deserve a Chance</h2>
+                <p>Scholarships are available for passionate students who want to learn, create, and grow through music.</p>
+                <a href="">Apply for Scholarship</a> 
             </div>
             <div class="footer-main">
                 <div class="menu">
                     <a href="#top-menu">Home</a>
-                    <a class="opt" href="">About</a>
+                    <a class="opt aboutBtn">About</a>
                     <a class="opt" href="">Courses</a>
                     <a class="opt" href="">Contact</a>
                     <button class="apply-btn admission-trigger" type="button" data-open-admission aria-haspopup="dialog" aria-controls="admission-dialog">Apply For Admission</button>
@@ -525,6 +528,25 @@
         <p>&copy; 2024 Music Academy. All rights reserved.</p>
     </footer>
     {% include "admission_modal.html" %}
+
+    <div id="aboutDiv" class="about-division">
+        <div class="about-popup">
+            <h2>About the Academy</h2>
+            <hr>
+            <div class="about-paragraph">
+                <p>Where music begins, and creativity finds its voice.</p>
+                <p>Our academy is a place for anyone who wants to discover, learn, and grow through music. From learning
+                    an instrument to finding confidence on stage, we believe every student has a unique sound waiting to
+                    be heard.</p>
+                <p>We bring together learning, creativity, and performance in an environment where students can explore
+                    music at their own pace, develop their skills, and turn their passion into something meaningful.</p>
+                <p>Whether you're taking your first step into music or looking to take your abilities further, we're
+                    here to help you find your sound, create your story, and make music your own.</p>
+                <p><strong>LEARN • CREATE • PERFORM</strong></p>
+            </div>
+
+        </div>
+    </div>
     {% assets "main_js" %}
     <script src="{{ASSET_URL}}"></script>
     {% endassets %}
