@@ -6,10 +6,42 @@
 }
 body{
     font-size:14px;
-    background-color:black;
-    
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+    background:linear-gradient(180deg, #3b2118 0%, #884722 48%, #f4a45f 100%);
+}
+.floating-music{
+    position:fixed;
+    z-index:0;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+.floating-music span{
+    position:absolute;
+    bottom:-12vh;
+    left:var(--note-left);
+    color:rgba(255, 242, 220, 0.42);
+    font-size:var(--note-size);
+    line-height:1;
+    animation:note-rise var(--note-duration) linear var(--note-delay) infinite;
+}
+@keyframes note-rise{
+    0%{
+        opacity:0;
+        transform:translate3d(0, 0, 0) rotate(-12deg);
+    }
+    12%{ opacity:1; }
+    85%{ opacity:0.75; }
+    100%{
+        opacity:0;
+        transform:translate3d(5vw, -120vh, 0) rotate(18deg);
+    }
 }
 .container{
+    position:relative;
+    z-index:1;
     background:white;
     width:min(500px, calc(100% - 32px));
     padding:25px;
@@ -602,5 +634,6 @@ body{
         transition:none;
     }
     .music-burst-symbol{ display:none; }
+    .floating-music{ display:none; }
 }
     

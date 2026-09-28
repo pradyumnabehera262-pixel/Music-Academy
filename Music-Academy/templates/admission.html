@@ -1,169 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Form</title>
-    <link rel="stylesheet" href="../static/css/registration.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="theme-color" content="#59311f">
+   <title>Admission | Music Academy</title>
+   <style>
+      /* Page foundation and animated backdrop */
+      *{box-sizing:border-box}
+      body{min-height:100vh;margin:0;padding:1px 16px 40px;overflow-x:hidden;background:linear-gradient(180deg,#382018 0%,#814525 48%,#f2a262 100%);color:#332820;font:15px/1.5 "Trebuchet MS",Arial,sans-serif}
+      .ambient-music{position:fixed;z-index:0;inset:0;overflow:hidden;pointer-events:none}
+      .ambient-item{position:absolute;bottom:-18vh;left:var(--left);width:var(--size);height:var(--size);overflow:visible;color:rgba(255,239,211,var(--opacity));animation:float-up var(--duration) var(--delay) linear infinite;will-change:transform,opacity}
+      .ambient-item use{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+      .ambient-item .solid{fill:currentColor;stroke:none}
+      @keyframes float-up{0%{opacity:0;transform:translate3d(0,0,0) rotate(0deg)}10%{opacity:1}82%{opacity:.8}100%{opacity:0;transform:translate3d(var(--drift),-125vh,0) rotate(var(--turn))}}
+      .container{position:relative;z-index:1;width:min(520px,100%);margin:46px auto 0;padding:28px 34px 32px;border-top:5px solid #d8652d;border-radius:8px;background:#fffdf8;box-shadow:0 18px 55px rgba(32,15,8,.28)}
+      h1{margin:0;text-align:center;color:#512e20;font:700 29px/1.2 Georgia,serif}
+      .intro{margin:8px 0 24px;text-align:center;color:#76685c}
+      .input-name{margin:15px 0}
+      .name-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .field{position:relative;display:block}
+      .field-icon{position:absolute;top:50%;left:13px;width:18px;height:18px;transform:translateY(-50%);fill:none;stroke:#b55d32;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+      .control{display:block;width:100%;min-height:46px;padding:11px 13px;border:1px solid #decfc1;border-radius:6px;background:#fff;color:#332820;font:inherit;outline:none;transition:border-color .18s,box-shadow .18s}
+      .field .control{padding-left:41px}
+      .control:focus{border-color:#c85c2a;box-shadow:0 0 0 3px rgba(200,92,42,.15)}
+      select.control{appearance:none;padding-right:38px;cursor:pointer}
+      .select-wrap{position:relative}
+      .select-wrap::after{position:absolute;top:17px;right:15px;width:8px;height:8px;border-right:2px solid #a4522d;border-bottom:2px solid #a4522d;content:"";pointer-events:none;transform:rotate(45deg)}
+      .section-title{margin:0 0 10px;color:#593725;font-size:16px}
+      .helper{margin:-5px 0 12px;color:#776b60;font-size:13px}
+      #secondary-subjects{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      #secondary-subjects label{padding:10px;border:1px solid #e6d8c8;border-radius:5px;background:#fffaf2;cursor:pointer}
+      #secondary-subjects input{accent-color:#c85c2a}
+      .gender-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .gender-card{position:relative;display:flex;align-items:center;min-width:0;min-height:75px;overflow:hidden;padding:12px;border:2px solid #555;border-radius:6px;background:linear-gradient(145deg,#5b3027,#201b1a);color:white;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s;animation:gender-card-reveal .5s ease both}
+      .gender-female{background:linear-gradient(145deg,#713b42,#201b1a);animation-delay:.1s}
+      .gender-card:hover{transform:translateY(-4px);border-color:#e75a08;box-shadow:0 7px 14px rgba(0,0,0,.35)}
+      .gender-card input{position:absolute;width:1px;height:1px;opacity:0}
+      .gender-symbol{position:absolute;top:50%;left:30px;color:rgba(255,255,255,.2);font-size:42px;line-height:1;transform:translate(-50%,-50%);transition:color .25s,transform .25s}
+      .gender-card-content{position:absolute;top:50%;right:12px;left:60px;display:flex;flex-direction:column;gap:3px;transform:translateY(-50%)}
+      .gender-card-content strong{font-size:17px}
+      .gender-card-content small{color:#f3dfd0;font-size:12px}
+      .gender-card::after{position:absolute;top:8px;right:8px;width:19px;height:19px;border-radius:50%;background:#e75a08;color:white;content:"✓";font-size:13px;line-height:19px;text-align:center;opacity:0;transform:scale(.5);transition:opacity .2s,transform .2s}
+      .gender-card:has(input:checked){border-color:#ff994a;box-shadow:0 0 0 3px rgba(231,90,8,.3),0 7px 14px rgba(0,0,0,.35)}
+      .gender-card:has(input:checked) .gender-symbol{color:rgba(255,207,164,.85);animation:gender-symbol-pulse .7s ease}
+      .gender-card:has(input:checked)::after{opacity:1;transform:scale(1)}
+      @keyframes gender-card-reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes gender-symbol-pulse{0%{transform:translate(-50%,-50%) scale(.8)}60%{transform:translate(-50%,-50%) scale(1.12)}100%{transform:translate(-50%,-50%) scale(1)}}
+      .terms-summary{padding:11px 13px;border-radius:5px;background:#fff3e5;color:#694021;font-weight:700;cursor:pointer}
+      .terms-copy{padding:0 12px;color:#65584d;font-size:13px}
+      .terms-consent{display:flex;align-items:flex-start;gap:10px;margin-top:13px;cursor:pointer}
+      .terms-consent input{flex:0 0 auto;width:18px;height:18px;margin:2px 0 0;accent-color:#c85c2a}
+      .register-action{display:flex;justify-content:center;margin:23px 0 0}
+      .button{min-width:155px;min-height:46px;padding:11px 25px;border:0;border-radius:5px;background:#a74624;box-shadow:0 4px 0 #71341f;color:white;font:700 15px "Trebuchet MS",Arial,sans-serif;cursor:pointer;transition:transform .15s,background .15s}
+      .button:hover{background:#87391f;transform:translateY(-1px)}
+      .button:active{transform:translateY(2px);box-shadow:0 2px 0 #71341f}
+      .button:focus-visible,.gender-card:has(input:focus-visible){outline:3px solid rgba(200,92,42,.35);outline-offset:3px}
+      .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      @media(max-width:520px){body{padding-right:12px;padding-left:12px}.container{margin-top:22px;padding:23px 18px 25px}.ambient-item:nth-child(even){display:none}}
+      @media(prefers-reduced-motion:reduce){.ambient-music{display:none}.gender-card,.gender-female,.gender-card:has(input:checked) .gender-symbol{animation:none}*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+   </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Admission Form</h2>
-        <div class="form-container">
-            <form action="">  
+   <!-- Inline SVG artwork is reused by the background and form controls. -->
+   <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="icon-guitar" viewBox="0 0 100 150"><path d="M47 53 43 24l-7-10 3-8 10 1 3 8-5 9 4 28M43 23l12-2M40 31l14-2M42 39l13-2M44 47l12-2"/><path d="M42 53c-8-4-17 1-18 10-1 6 3 9 2 14-2 11 7 19 18 17 5-1 9 1 14 0 11-3 14-14 9-22-3-5-1-9-3-14-4-9-14-10-21-5z"/><circle cx="48" cy="72" r="8"/><path d="m48 9 1 106m-8-50 15-2m-15 4 15-2m-14 4 14-2"/></symbol>
+      <symbol id="icon-sitar" viewBox="0 0 100 170"><path d="M54 72 49 19l-7-12 4-5 10 1 3 6-6 10 6 54M44 18l15-2M45 29l15-2M46 40l15-2M47 51l15-2M48 62l15-2"/><path d="M49 72c-9-8-22-4-24 7-1 6 2 10 0 16-3 14 6 25 19 23 6-1 12 2 18-1 12-5 13-18 5-27-3-4-3-9-7-14-3-4-7-6-11-4z"/><circle cx="49" cy="94" r="7"/><path d="m48 8 8 141M39 84l20-3m-19 8 20-3m-20 8 20-3m-19 8 19-3m-17 8 16-2"/></symbol>
+      <symbol id="icon-harmonium" viewBox="0 0 120 90"><path d="M10 25h100v53H10zM18 18h84v7H18zM17 34h34v35H17zM56 34h45v35H56zM21 34v35m7-35v35m7-35v35m7-35v35m7-35v35m13-35v35m8-35v35m7-35v35m8-35v35m7-35v35"/><path d="M12 77h96M5 81h110"/><circle class="solid" cx="105" cy="49" r="2"/></symbol>
+      <symbol id="icon-note" viewBox="0 0 80 100"><path class="solid" d="M49 9v55c-4-4-12-5-19-2-9 4-12 12-7 17s16 5 23 0c5-3 8-8 8-13V29l19-5V9z"/></symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 3a14 14 0 0 1-7-7l3-2z"/></symbol>
+   </svg>
+   <div class="ambient-music" aria-hidden="true"></div>
 
-                 <div class="input-name">
-                    <i class="fa fa-user user"></i>
-                    <input type="text" placeholder="First Name" class="name">
+   <main class="container">
+      <h1>Admission Form</h1>
+      <p class="intro">Start your next chapter in music.</p>
+      <form action="">
+         <div class="input-name name-row">
+            <label class="field"><span class="sr-only">First name</span><svg class="field-icon" aria-hidden="true"><use href="#icon-user"/></svg><input class="control" type="text" name="first-name" placeholder="First name" autocomplete="given-name" required></label>
+            <label class="field"><span class="sr-only">Last name</span><svg class="field-icon" aria-hidden="true"><use href="#icon-user"/></svg><input class="control" type="text" name="last-name" placeholder="Last name" autocomplete="family-name" required></label>
+         </div>
+         <div class="input-name"><label class="field"><span class="sr-only">Email</span><svg class="field-icon" aria-hidden="true"><use href="#icon-mail"/></svg><input class="control" type="email" name="email" placeholder="Email address" autocomplete="email" required></label></div>
+         <div class="input-name"><label class="field"><span class="sr-only">Phone number</span><svg class="field-icon" aria-hidden="true"><use href="#icon-phone"/></svg><input class="control" type="tel" name="phone" placeholder="Phone number" autocomplete="tel" required></label></div>
+         <div class="input-name select-wrap"><label class="sr-only" for="country">Country</label>
+            <select class="control" id="country" name="country" required>
+               <option value="">Select country</option><option>India</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>New Zealand</option><option>Germany</option><option>France</option><option>Italy</option><option>Spain</option><option>Netherlands</option><option>Switzerland</option><option>Japan</option><option>South Korea</option><option>China</option><option>Singapore</option><option>Malaysia</option><option>Thailand</option><option>United Arab Emirates</option><option>Saudi Arabia</option><option>Qatar</option><option>South Africa</option><option>Nigeria</option><option>Egypt</option><option>Brazil</option><option>Mexico</option><option>Argentina</option><option>Other</option>
+            </select>
+         </div>
+         <div class="input-name select-wrap"><label class="sr-only" for="main-subject">Main subject</label>
+            <select class="control" id="main-subject" name="main-subject" required aria-controls="secondary-section" aria-describedby="secondary-help">
+               <option value="">Choose a main subject</option><option value="vocal">Vocal</option><option value="guitar">Guitar</option><option value="piano">Piano</option><option value="violin">Violin</option><option value="drums">Drums</option><option value="production">Music Production</option>
+            </select>
+         </div>
+         <section id="secondary-section" class="input-name" hidden aria-labelledby="secondary-heading">
+            <h2 id="secondary-heading" class="section-title">Choose secondary subjects</h2>
+            <p id="secondary-help" class="helper">Select any additional areas you'd like to explore.</p>
+            <div id="secondary-subjects" aria-live="polite"></div>
+         </section>
+         <section class="input-name" aria-labelledby="gender-heading">
+            <h2 id="gender-heading" class="section-title">Choose your gender</h2>
+            <div class="gender-options">
+               <label class="gender-card gender-male"><input type="radio" name="gender" value="male" required><span class="gender-symbol" aria-hidden="true">&#9794;</span><span class="gender-card-content"><strong>Male</strong><small>Male student</small></span></label>
+               <label class="gender-card gender-female"><input type="radio" name="gender" value="female"><span class="gender-symbol" aria-hidden="true">&#9792;</span><span class="gender-card-content"><strong>Female</strong><small>Female student</small></span></label>
+            </div>
+         </section>
+         <div class="input-name">
+            <details><summary class="terms-summary">Free consultation terms</summary><p class="terms-copy" id="consultation-terms-copy">The initial music consultation is free and carries no obligation to enroll. We will use your contact details only to arrange and follow up on this consultation. Please provide accurate information; appointment times are subject to availability, and you can contact us to reschedule or cancel.</p></details>
+            <label class="terms-consent"><input type="checkbox" id="terms-accepted" name="terms-accepted" required aria-describedby="consultation-terms-copy"><span>I have read and agree to the free consultation terms.</span></label>
+         </div>
+         <div class="register-action"><button type="submit" class="button">Register</button></div>
+      </form>
+   </main>
 
-                    <span>
-                        <i class="fa fa-user user"></i>
-                        <input type="text" placeholder="Last Name" class="name">
-                    </span>
-                 </div>
+   <script>
+      // Add a fixed set of SVG floaters; CSS handles all animation frames.
+      const ambientLayer = document.querySelector(".ambient-music");
+      const ambientTypes = ["guitar", "sitar", "harmonium", "note"];
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-                
+      if (!reducedMotion) {
+         const floaterCount = window.matchMedia("(max-width: 520px)").matches ? 10 : 16;
+         for (let index = 0; index < floaterCount; index += 1) {
+            const type = ambientTypes[index % ambientTypes.length];
+            const floater = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            const icon = document.createElementNS("http://www.w3.org/2000/svg", "use");
+            const isNote = type === "note";
+            const duration = 19 + Math.random() * 17;
 
-                  <div class="input-name">
-                    <i class="fa fa-envelope email"></i>
-                    <input type="email" placeholder="email" class="text-name">
-                 </div>
+            floater.setAttribute("viewBox", type === "guitar" ? "0 0 100 150" : type === "sitar" ? "0 0 100 170" : type === "harmonium" ? "0 0 120 90" : "0 0 80 100");
+            floater.setAttribute("class", "ambient-item");
+            floater.setAttribute("focusable", "false");
+            icon.setAttribute("href", `#icon-${type}`);
+            floater.appendChild(icon);
+            floater.style.setProperty("--left", `${Math.random() * 96}%`);
+            floater.style.setProperty("--size", `${isNote ? 22 + Math.random() * 28 : 48 + Math.random() * 42}px`);
+            floater.style.setProperty("--duration", `${duration}s`);
+            floater.style.setProperty("--delay", `${-Math.random() * duration}s`);
+            floater.style.setProperty("--drift", `${Math.random() * 16 - 8}vw`);
+            floater.style.setProperty("--turn", `${Math.random() * 50 - 25}deg`);
+            floater.style.setProperty("--opacity", `${0.08 + Math.random() * 0.13}`);
+            ambientLayer.appendChild(floater);
+         }
+      }
 
-                 <div class="input-name">
-                    <i class="fa fa-phone phone"></i>
-                    <input type="tel" placeholder="Phone Number" class="text-name">
-                 </div>
+      // Update the optional subjects when the main course changes.
+      const mainSubject = document.getElementById("main-subject");
+      const secondarySection = document.getElementById("secondary-section");
+      const secondarySubjects = document.getElementById("secondary-subjects");
+      const subjectOptions = {
+         vocal: ["Indian Classical Vocal", "Western Vocal", "Bollywood Singing", "Vocal Technique"],
+         guitar: ["Music Theory", "Songwriting", "Acoustic Guitar", "Music Performance"],
+         piano: ["Music Theory", "Ear Training", "Composition", "Sight Reading"],
+         violin: ["Music Theory", "Ear Training", "Orchestra", "Music Performance"],
+         drums: ["Rhythm Training", "Percussion", "Band Performance", "Music Theory"],
+         production: ["Beat Making", "Recording", "Mixing", "Mastering", "Sound Design"]
+      };
 
-                 
-                 <div class="input-name" id="country">
-                    <!-- <label for="country" class="">Country</label> -->
-
-                    <select id="country" name="country">
-                           <option value="">-- Select Country --</option>
-
-                           <option value="India">India</option>
-                           <option value="United States">United States</option>  
-                           <option value="United Kingdom">United Kingdom</option>
-                           <option value="Canada">Canada</option>
-                           <option value="Australia">Australia</option>
-                           <option value="New Zealand">New Zealand</option>
-
-                           <option value="Germany">Germany</option>
-                           <option value="France">France</option>
-                           <option value="Italy">Italy</option>
-                           <option value="Spain">Spain</option>
-                           <option value="Netherlands">Netherlands</option>
-                           <option value="Switzerland">Switzerland</option>
-
-                           <option value="Japan">Japan</option>
-                           <option value="South Korea">South Korea</option>
-                           <option value="China">China</option>
-                           <option value="Singapore">Singapore</option>
-                           <option value="Malaysia">Malaysia</option>
-                           <option value="Thailand">Thailand</option>
-
-                           <option value="United Arab Emirates">United Arab Emirates</option>
-                           <option value="Saudi Arabia">Saudi Arabia</option>
-                           <option value="Qatar">Qatar</option>
-
-                           <option value="South Africa">South Africa</option>
-                           <option value="Nigeria">Nigeria</option>
-                           <option value="Egypt">Egypt</option>
-
-                           <option value="Brazil">Brazil</option>
-                           <option value="Mexico">Mexico</option>
-                           <option value="Argentina">Argentina</option>
-
-                           <option value="Other">Other</option>
-                     </select>
-
-                     <div class="arrow"></div>
-                  </div>
-
-
-
-                   <div class="input-name" id="course">
-                     <!-- <label for="main-subject">Choose Your Main Subject</label> -->
-
-                     <select id="main-subject" name="main-subject" required aria-controls="secondary-section" aria-describedby="secondary-help">
-
-                        <option value="">-- Select a subject --</option>
-
-                         <option value="vocal">Vocal</option>
-                         <option value="guitar">Guitar</option>
-                         <option value="piano">Piano</option>
-                         <option value="violin">Violin</option>
-                         <option value="drums">Drums</option>
-                         <option value="production">Music Production</option>
-
-                     </select>
-
-                     <div class="arrow"></div>
-                 </div>
-
-                 <!-- Secondary Subjects -->
-
-                  <div id="secondary-section" class="input-name" hidden role="group" aria-labelledby="secondary-heading">
-
-                     <h3 id="secondary-heading">Choose Secondary Subjects</h3>
-                     <p id="secondary-help">You can select more than one.</p>
-
-                     <div id="secondary-subjects" aria-live="polite">
-                           <!-- JavaScript will add subjects here -->
-                        </div>
-
-                  </div>
-
-
-                  <div class="input-name gender-section">
-                     <h3>Choose Your Gender</h3>
-                     <div class="gender-options">
-                        <label class="gender-card gender-male">
-                           <input type="radio" class="radio-button" name="gender" value="male" required>
-                           <span class="gender-symbol" aria-hidden="true">&#9794;</span>
-                           <span class="gender-card-content">
-                              <strong>Male</strong>
-                              <small>Male student</small>
-                           </span>
-                        </label>
-
-                        <label class="gender-card gender-female">
-                           <input type="radio" class="radio-button" name="gender" value="female">
-                           <span class="gender-symbol" aria-hidden="true">&#9792;</span>
-                           <span class="gender-card-content">
-                              <strong>Female</strong>
-                              <small>Female student</small>
-                           </span>
-                        </label>
-                     </div>
-                  </div>
-                     
-
-                  <div class="input-name consultation-terms">
-                     <details class="terms-details">
-                        <summary class="terms-summary">Free Consultation Terms</summary>
-                        <p class="terms-copy" id="consultation-terms-copy">
-                           The initial music consultation is free and carries no obligation to enroll. We will use your contact details only to arrange and follow up on this consultation. Please provide accurate information; appointment times are subject to availability, and you can contact us to reschedule or cancel.
-                        </p>
-                     </details>
-                     <label class="terms-consent" for="terms-accepted">
-                        <input type="checkbox" class="check-button" id="terms-accepted" name="terms-accepted" required aria-describedby="consultation-terms-copy">
-                        <span class="checkmark" aria-hidden="true"></span>
-                        <span class="consent-label">I have read and agree to the free consultation terms.</span>
-                     </label>
-                  </div>
-
-                  <div class="input-name register-action">
-                     <input type="submit" value="Register" class="button">
-                  </div>
-                 
-                 
-            </form>
-        </div>
-
-    </div>
-   
-     <script src="../static/js/admsn.js"></script>
+      mainSubject.addEventListener("change", () => {
+         secondarySubjects.replaceChildren();
+         const options = subjectOptions[mainSubject.value] || [];
+         secondarySection.hidden = options.length === 0;
+         for (const option of options) {
+            const label = document.createElement("label");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "secondary-subject";
+            checkbox.value = option;
+            label.append(checkbox, document.createTextNode(` ${option}`));
+            secondarySubjects.appendChild(label);
+         }
+      });
+   </script>
 </body>
 </html>
