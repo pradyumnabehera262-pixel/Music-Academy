@@ -1108,7 +1108,7 @@ header {
     .upcoming-events-wrapper,
     .special-events-wrapper,
     .events-functions-wrapper {
-        height: 240px;
+        height: 260px;
     }
 }
 
@@ -1464,6 +1464,7 @@ header {
     .instructor-card.full-card {
         flex-direction: column;
     }
+
     .instructor-card.full-card img {
         width: 100%;
         height: auto;
@@ -1495,7 +1496,7 @@ header {
     transform: translateY(-2px);
 }
 
-.admission-dialog:not([open]){
+.admission-dialog:not([open]) {
     display: none;
 }
 
@@ -1573,8 +1574,15 @@ header {
 }
 
 @keyframes admission-dialog-enter {
-    from { opacity: 0; transform: translateY(12px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (max-width: 600px) {
@@ -1591,7 +1599,13 @@ header {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .admission-trigger,
-    .admission-dialog-close { transition: none; }
-    .admission-dialog[open] { animation: none; }
+    .admission-dialog-close {
+        transition: none;
+    }
+
+    .admission-dialog[open] {
+        animation: none;
+    }
 }
