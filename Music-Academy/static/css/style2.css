@@ -698,3 +698,22 @@ body.about-open {
         background-position: 50% 50%;
     }
 }
+
+
+/* footer official rights */
+.official-rights{
+    display: flex;
+    flex-direction: column;
+    place-self: center;
+}
+
+.official-documents{
+    display: flex;
+    flex-direction: row;
+    place-self: center ;
+    gap: 10px;
+}
+
+.official-documents a {
+    color: black;
+}
