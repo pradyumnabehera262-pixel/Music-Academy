@@ -461,3 +461,25 @@ if (aboutBtn.length && aboutDiv){
 	});
 	});
 };
+
+//footer-banner separator animate
+
+const footerBanner = document.querySelector(".footer-banner");
+const separator = document.querySelector(".separator");
+
+if (footerBanner && separator) {
+	const separatorObserver = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				separator.classList.add("animate");
+				footerBanner.classList.add("is-visible");
+			} else {
+				separator.classList.remove("animate");
+				footerBanner.classList.remove("is-visible");
+			}
+		});
+	}, {
+		threshold: 0.4
+	});
+	separatorObserver.observe(footerBanner);
+}
