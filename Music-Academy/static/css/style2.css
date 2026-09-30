@@ -494,7 +494,7 @@ html {
 }
 
 .about-popup {
-    max-width: 1200px;
+    max-width: 800px;
     background-color: white;
     margin-top: 50px;
     height: 70vh;
@@ -716,4 +716,193 @@ body.about-open {
 
 .official-documents a {
     color: black;
+}
+
+
+/* ==============================
+   TERMS & CONDITIONS POPUP
+   ============================== */
+
+.terms {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    background: rgba(18, 13, 13, 0.78);
+    backdrop-filter: blur(5px);
+}
+
+/* When you want the popup visible */
+.terms.active {
+    display: flex;
+}
+
+/* Popup card */
+.terms-card {
+    width: min(850px, calc(100vw - 32px));
+    height: min(800px, calc(100vh - 32px));
+
+    box-sizing: border-box;
+
+    padding: 30px 34px 40px;
+
+    overflow-y: auto;
+
+    background: #2d1c1b;
+    color: #fff8ca;
+
+    border: 2px solid #c8753f;
+    border-radius: 14px;
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(200, 117, 63, 0.12);
+
+    animation: terms-popup-enter 220ms
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        both;
+}
+
+
+/* Main heading */
+.terms-card > h2 {
+    margin: 0 0 8px;
+
+    color: #fff8ca;
+
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+}
+
+
+/* Last updated */
+.terms-card > h4 {
+    margin: 0 0 25px;
+
+    color: #d8b6a6;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+
+/* Paragraphs */
+.terms-card p {
+    margin: 12px 0;
+
+    color: #efeaea;
+
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* Section headings */
+.terms-card ol > li > h3 {
+    margin: 30px 0 10px;
+
+    color: #e4c884;
+
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+
+/* Lists */
+.terms-card ul {
+    margin: 12px 0;
+    padding-left: 25px;
+}
+
+.terms-card li {
+    color: #efeaea;
+    line-height: 1.65;
+}
+
+.terms-card ul li {
+    margin: 6px 0;
+}
+
+
+/* Scrollbar */
+.terms-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terms-card::-webkit-scrollbar-track {
+    background: #1f1413;
+}
+
+.terms-card::-webkit-scrollbar-thumb {
+    background: #c8753f;
+    border-radius: 10px;
+}
+
+.terms-card::-webkit-scrollbar-thumb:hover {
+    background: #e4c884;
+}
+
+
+/* Popup animation */
+@keyframes terms-popup-enter {
+
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .terms {
+        padding: 8px;
+    }
+
+    .terms-card {
+        width: calc(100vw - 16px);
+        height: calc(100vh - 16px);
+
+        padding: 22px 18px 30px;
+
+        border-radius: 9px;
+    }
+
+    .terms-card > h2 {
+        font-size: 1.45rem;
+    }
+
+    .terms-card p {
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+
+    .terms-card ol {
+        padding-left: 22px;
+    }
+
+}
+
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .terms-card {
+        animation: none;
+    }
+
 }

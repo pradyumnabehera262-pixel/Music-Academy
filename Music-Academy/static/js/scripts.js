@@ -483,3 +483,14 @@ if (footerBanner && separator) {
 	});
 	separatorObserver.observe(footerBanner);
 }
+
+const termsCard = document.querySelector(".terms");
+const termsBtn = document.getElementById("termsBtn");
+if (termsCard && termsBtn) {
+	termsBtn.addEventListener("click", function(){
+		termsCard.classList.add("active");
+	});
+	termsCard.addEventListener("click", function(){
+		termsCard.classList.remove("active");
+	});
+}
