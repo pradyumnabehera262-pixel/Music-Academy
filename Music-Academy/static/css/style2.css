@@ -478,56 +478,201 @@ html {
 }
 
 
-/* about popup */
+/* =========================================================
+   ABOUT POPUP
+   ========================================================= */
+
+
+/* =========================================================
+   OVERLAY
+   ========================================================= */
 
 .about-division {
     display: flex;
     position: fixed;
     inset: 0;
+
+    z-index: 9999;
+
     align-items: center;
     justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(18, 13, 13, 0.72);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    backdrop-filter: blur(5px);
-    transition: opacity 0.35s ease, visibility 0.35s ease;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
 }
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
 
 .about-popup {
-    max-width: 800px;
-    background-color: white;
-    margin-top: 50px;
-    height: 70vh;
-    width: 70vw;
-    padding: 50px;
-    outline: 10px solid #ebe1e059;
-    outline-offset: 0px;
-    border-radius: 30px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    transform: translateY(15px) scale(0.98);
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.35s ease;
+    position: relative;
 
+    width: min(800px, 85vw);
+    height: min(70vh, 700px);
+
+    margin-top: 30px;
+    padding: 45px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff8ca 0%,
+            #f7e7b8 55%,
+            #efe0bd 100%
+        );
+
+    color: #2d1c1b;
+
+    border: 1px solid rgba(200, 117, 63, 0.65);
+    border-radius: 30px;
+
+    outline: 8px solid rgba(235, 225, 224, 0.22);
+    outline-offset: 0;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(228, 200, 132, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8753f transparent;
+
+    transform: translateY(15px) scale(0.97);
+
+    opacity: 0;
+
+    transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease;
 }
+
+
+/* =========================================================
+   CUSTOM SCROLLBAR
+   ========================================================= */
+
+.about-popup::-webkit-scrollbar {
+    width: 7px;
+}
+
+.about-popup::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.about-popup::-webkit-scrollbar-thumb {
+    background: #c8753f;
+    border-radius: 20px;
+}
+
+.about-popup::-webkit-scrollbar-thumb:hover {
+    background: #502c2c;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .about-popup h2 {
-    font-size: clamp(1.5rem, 4vw, 4rem);
+    position: relative;
+
+    margin: 0 0 20px;
+
+    color: #502c2c;
+
+    font-size: clamp(2rem, 5vw, 3.5rem);
+
     font-family: "Playfair Display", serif;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    letter-spacing: 0.3px;
 }
+
+
+/* Decorative line underneath heading */
+
+.about-popup h2::after {
+    content: "";
+
+    display: block;
+
+    width: 65px;
+    height: 3px;
+
+    margin-top: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c8753f,
+            #e4c884
+        );
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   ABOUT PARAGRAPHS
+   ========================================================= */
 
 .about-paragraph {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    gap: 10px;
+
+    margin-top: 25px;
+
+    gap: 14px;
 }
 
+
 .about-paragraph p {
-    font-size: clamp(0.5rem, 2vh, 3rem);
-    gap: 5px;
+    margin: 0;
+
+    color: #2d1c1b;
+
+    font-size: clamp(0.95rem, 1.35vw, 1.1rem);
+
+    line-height: 1.8;
+
+    letter-spacing: 0.15px;
 }
+
+
+/* First paragraph emphasis */
+
+.about-paragraph p:first-child {
+    color: #502c2c;
+
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   OPEN STATE
+   ========================================================= */
 
 .about-division.is-visible {
     opacity: 1;
@@ -535,14 +680,124 @@ html {
     pointer-events: auto;
 }
 
+
 .about-division.is-visible .about-popup {
     transform: translateY(0) scale(1);
+
     opacity: 1;
 }
+
+
+/* =========================================================
+   BODY LOCK
+   ========================================================= */
 
 body.about-open {
     overflow: hidden;
 }
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .about-division {
+        padding: 12px;
+    }
+
+
+    .about-popup {
+        width: 100%;
+        height: 82vh;
+
+        margin-top: 15px;
+
+        padding: 30px 24px;
+
+        border-radius: 22px;
+
+        outline-width: 5px;
+    }
+
+
+    .about-popup h2 {
+        font-size: clamp(1.8rem, 9vw, 2.6rem);
+
+        margin-bottom: 18px;
+    }
+
+
+    .about-popup h2::after {
+        width: 50px;
+        height: 2px;
+
+        margin-top: 11px;
+    }
+
+
+    .about-paragraph {
+        margin-top: 20px;
+
+        gap: 12px;
+    }
+
+
+    .about-paragraph p {
+        font-size: 0.95rem;
+
+        line-height: 1.75;
+    }
+
+
+    .about-paragraph p:first-child {
+        font-size: 1rem;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .about-popup {
+        height: 84vh;
+
+        padding: 25px 19px;
+
+        border-radius: 19px;
+    }
+
+
+    .about-popup h2 {
+        font-size: 1.8rem;
+    }
+
+
+    .about-paragraph p {
+        font-size: 0.9rem;
+
+        line-height: 1.7;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .about-division,
+    .about-popup {
+        transition: none;
+    }
+
+}
+
 
 
 /* footer banner */
@@ -719,13 +974,824 @@ body.about-open {
 }
 
 
-/* ==============================
-   TERMS & CONDITIONS POPUP
-   ============================== */
+
+/* =========================================
+   TERMS & CONDITIONS
+   ========================================= */
+
+
+/* =========================================
+   MAIN OVERLAY
+   ========================================= */
 
 .terms {
-    display: none;
+    position: fixed;
+    inset: 0;
 
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(18, 13, 13, 0.78);
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+
+/* =========================================
+   ACTIVE STATE
+   ========================================= */
+
+.terms.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* =========================================
+   TERMS CARD
+   ========================================= */
+
+.terms-card {
+    width: min(900px, 100%);
+    max-height: 88vh;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff8ca,
+            #f7e7b8
+        );
+
+    border: 2px solid #c8753f;
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(228, 200, 132, 0.4);
+
+    overflow: hidden;
+
+    transform: translateY(25px) scale(0.97);
+
+    transition:
+        transform 0.35s ease;
+}
+
+
+/* Card animation when opened */
+
+.terms.active .terms-card {
+    transform: translateY(0) scale(1);
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.terms-header {
+    position: relative;
+
+    padding: 22px 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2d1c1b,
+            #502c2c
+        );
+
+    border-bottom: 2px solid #c8753f;
+}
+
+
+.terms-header h2 {
+    margin: 0;
+
+    color: #fff8ca;
+
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   LAST UPDATED
+   ========================================= */
+
+.terms-date {
+    margin: 7px 0 0;
+
+    color: #e4c884;
+
+    font-size: 0.88rem;
+}
+
+
+/* =========================================
+   PDF ACTION
+   ========================================= */
+
+.terms-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 14px 26px 0;
+}
+
+
+.download-pdf {
+    padding: 8px 14px;
+
+    border: 1px solid #c8753f;
+    border-radius: 20px;
+
+    background: rgba(200, 117, 63, 0.1);
+
+    color: #502c2c;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.download-pdf:hover {
+    background: #c8753f;
+    color: #fff8ca;
+
+    transform: translateY(-1px);
+}
+
+
+.download-pdf:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   INTRODUCTION
+   ========================================= */
+
+.terms-introduction {
+    padding: 24px 34px 0;
+
+    color: #2d1c1b;
+
+    line-height: 1.75;
+}
+
+
+.terms-introduction p {
+    margin: 0 0 16px;
+}
+
+
+/* =========================================
+   SCROLLABLE CONTENT
+   ========================================= */
+
+.terms-card {
+    overflow: hidden;
+}
+
+
+.terms-section,
+.terms-introduction {
+    box-sizing: border-box;
+}
+
+
+/*
+   The article itself needs to scroll while
+   keeping the header and PDF button visible.
+*/
+
+.terms-card {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.terms-introduction,
+.terms-section {
+    flex-shrink: 0;
+}
+
+
+/*
+   Because your existing HTML places all sections
+   directly inside .terms-card, the card uses its
+   own scrolling area.
+*/
+
+.terms-card {
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8753f #f7e7b8;
+}
+
+
+/* Custom scrollbar */
+
+.terms-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.terms-card::-webkit-scrollbar-track {
+    background: #f7e7b8;
+}
+
+
+.terms-card::-webkit-scrollbar-thumb {
+    background: #c8753f;
+    border-radius: 10px;
+}
+
+
+.terms-card::-webkit-scrollbar-thumb:hover {
+    background: #502c2c;
+}
+
+
+/* =========================================
+   SECTIONS
+   ========================================= */
+
+.terms-section {
+    margin: 0;
+    padding: 0 34px;
+}
+
+
+/* Section heading */
+
+.terms-section h3 {
+    margin: 30px 0 12px;
+
+    padding-bottom: 7px;
+
+    color: #502c2c;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px solid rgba(200, 117, 63, 0.45);
+}
+
+
+/* Paragraphs */
+
+.terms-section p {
+    margin: 0 0 16px;
+
+    color: #2d1c1b;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================
+   LISTS
+   ========================================= */
+
+.terms-section ul {
+    margin: 8px 0 18px;
+
+    padding-left: 25px;
+
+    color: #2d1c1b;
+}
+
+
+.terms-section li {
+    margin-bottom: 6px;
+
+    padding-left: 4px;
+
+    line-height: 1.7;
+}
+
+
+.terms-section li::marker {
+    color: #c8753f;
+}
+
+
+/* =========================================
+   CONTACT BOX
+   ========================================= */
+
+.terms-contact {
+    margin-top: 18px;
+    margin-bottom: 32px;
+
+    padding: 18px 20px;
+
+    background: rgba(255, 255, 255, 0.28);
+
+    border-left: 4px solid #c8753f;
+    border-radius: 8px;
+}
+
+
+.terms-contact p {
+    margin-bottom: 6px;
+}
+
+
+.terms-contact p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .terms {
+        padding: 12px;
+    }
+
+
+    .terms-card {
+        max-height: 92vh;
+
+        border-radius: 17px;
+    }
+
+
+    .terms-header {
+        padding: 17px 18px;
+    }
+
+
+    .terms-header h2 {
+        font-size: 1.25rem;
+    }
+
+
+    .terms-date {
+        font-size: 0.8rem;
+    }
+
+
+    .terms-actions {
+        padding: 13px 20px 0;
+    }
+
+
+    .download-pdf {
+        padding: 7px 12px;
+
+        font-size: 0.8rem;
+    }
+
+
+    .terms-introduction {
+        padding: 22px 20px 0;
+
+        font-size: 0.93rem;
+
+        line-height: 1.7;
+    }
+
+
+    .terms-section {
+        padding: 0 20px;
+    }
+
+
+    .terms-section h3 {
+        margin-top: 25px;
+
+        font-size: 1.08rem;
+    }
+
+
+    .terms-section p {
+        font-size: 0.93rem;
+
+        line-height: 1.7;
+    }
+
+
+    .terms-section ul {
+        padding-left: 21px;
+
+        font-size: 0.93rem;
+    }
+
+
+    .terms-contact {
+        margin-bottom: 25px;
+
+        padding: 16px 17px;
+    }
+
+}
+
+
+
+/* =========================================
+   PRIVACY POLICY
+   ========================================= */
+
+.privacy-division {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(18, 13, 13, 0.78);
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+
+/* Open state */
+
+.privacy-division.privacy-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Main popup */
+
+.privacy-popup {
+    width: min(900px, 100%);
+    max-height: 88vh;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff8ca,
+            #f7e7b8
+        );
+
+    border: 2px solid #c8753f;
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(228, 200, 132, 0.4);
+
+    overflow: hidden;
+
+    transform: translateY(25px) scale(0.97);
+
+    transition:
+        transform 0.35s ease;
+}
+
+
+.privacy-division.privacy-open .privacy-popup {
+    transform: translateY(0) scale(1);
+}
+
+
+/* Header */
+
+.privacy-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2d1c1b,
+            #502c2c
+        );
+
+    border-bottom: 2px solid #c8753f;
+}
+
+
+.privacy-header h2 {
+    margin: 0;
+
+    color: #fff8ca;
+
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* Close button */
+
+.privacy-close {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e4c884;
+    border-radius: 50%;
+
+    background: rgba(255, 248, 202, 0.08);
+
+    color: #fff8ca;
+
+    font-size: 1.7rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.privacy-close:hover {
+    background: #e4c884;
+    color: #2d1c1b;
+
+    transform: rotate(90deg);
+}
+
+
+/* Scrollable content */
+
+.privacy-content {
+    max-height: calc(88vh - 86px);
+
+    overflow-y: auto;
+
+    padding: 30px 34px 38px;
+
+    color: #2d1c1b;
+
+    line-height: 1.75;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8753f #f7e7b8;
+}
+
+
+/* Webkit scrollbar */
+
+.privacy-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.privacy-content::-webkit-scrollbar-track {
+    background: #f7e7b8;
+}
+
+
+.privacy-content::-webkit-scrollbar-thumb {
+    background: #c8753f;
+    border-radius: 10px;
+}
+
+
+.privacy-content::-webkit-scrollbar-thumb:hover {
+    background: #502c2c;
+}
+
+
+/* Updated date */
+
+.privacy-updated {
+    margin-top: 0;
+
+    color: #502c2c;
+
+    font-size: 0.9rem;
+}
+
+
+.privacy-updated strong {
+    color: #c8753f;
+}
+
+
+/* Paragraphs */
+
+.privacy-content p {
+    margin: 0 0 16px;
+}
+
+
+/* Section headings */
+
+.privacy-content h3 {
+    margin: 30px 0 12px;
+
+    color: #502c2c;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    padding-bottom: 7px;
+
+    border-bottom: 1px solid rgba(200, 117, 63, 0.45);
+}
+
+
+/* Smaller headings */
+
+.privacy-content h4 {
+    margin: 20px 0 8px;
+
+    color: #c8753f;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+/* Lists */
+
+.privacy-content ul {
+    margin: 8px 0 18px;
+
+    padding-left: 25px;
+}
+
+
+.privacy-content li {
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+
+.privacy-content li::marker {
+    color: #c8753f;
+}
+
+
+/* Reference */
+
+.privacy-reference {
+    display: inline-block;
+
+    margin-top: -5px !important;
+
+    padding: 4px 10px;
+
+    border-radius: 20px;
+
+    background: rgba(200, 117, 63, 0.12);
+
+    color: #c8753f;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* Contact section */
+
+.privacy-contact {
+    margin-top: 18px;
+    padding: 18px 20px;
+
+    background: rgba(255, 255, 255, 0.28);
+
+    border-left: 4px solid #c8753f;
+    border-radius: 8px;
+}
+
+
+.privacy-contact p {
+    margin-bottom: 6px;
+}
+
+
+.privacy-contact p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .privacy-division {
+        padding: 12px;
+    }
+
+
+    .privacy-popup {
+        max-height: 92vh;
+
+        border-radius: 17px;
+    }
+
+
+    .privacy-header {
+        padding: 17px 18px;
+    }
+
+
+    .privacy-header h2 {
+        font-size: 1.25rem;
+    }
+
+
+    .privacy-close {
+        width: 36px;
+        height: 36px;
+
+        font-size: 1.5rem;
+    }
+
+
+    .privacy-content {
+        max-height: calc(92vh - 70px);
+
+        padding: 22px 20px 30px;
+
+        font-size: 0.93rem;
+
+        line-height: 1.7;
+    }
+
+
+    .privacy-content h3 {
+        margin-top: 25px;
+
+        font-size: 1.08rem;
+    }
+
+
+    .privacy-content h4 {
+        font-size: 0.96rem;
+    }
+
+
+    .privacy-content ul {
+        padding-left: 21px;
+    }
+
+}
+
+
+
+
+/* ================================
+   CONTACT POPUP
+================================ */
+
+.contact-division {
+    display: flex;
     position: fixed;
     inset: 0;
     z-index: 9999;
@@ -733,176 +1799,698 @@ body.about-open {
     align-items: center;
     justify-content: center;
 
-    padding: 16px;
+    padding: 20px;
 
-    background: rgba(18, 13, 13, 0.78);
-    backdrop-filter: blur(5px);
+    background: rgba(18, 13, 13, 0.72);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
 }
 
-/* When you want the popup visible */
-.terms.active {
-    display: flex;
-}
 
-/* Popup card */
-.terms-card {
-    width: min(850px, calc(100vw - 32px));
-    height: min(800px, calc(100vh - 32px));
+/* ================================
+   CONTACT CARD
+================================ */
 
-    box-sizing: border-box;
+.contact-popup {
+    position: relative;
 
-    padding: 30px 34px 40px;
+    width: min(800px, 85vw);
+    height: min(75vh, 720px);
 
-    overflow-y: auto;
+    margin-top: 30px;
+    padding: 45px;
 
-    background: #2d1c1b;
-    color: #fff8ca;
+    background:
+        linear-gradient(
+            145deg,
+            #fff8ca 0%,
+            #f7e7b8 55%,
+            #efe0bd 100%
+        );
 
-    border: 2px solid #c8753f;
-    border-radius: 14px;
+    color: #2d1c1b;
+
+    border: 1px solid rgba(200, 117, 63, 0.65);
+    border-radius: 30px;
+
+    outline: 8px solid rgba(235, 225, 224, 0.22);
+    outline-offset: 0;
 
     box-shadow:
-        0 24px 70px rgba(0, 0, 0, 0.45),
-        0 0 35px rgba(200, 117, 63, 0.12);
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(228, 200, 132, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
-    animation: terms-popup-enter 220ms
-        cubic-bezier(0.2, 0.8, 0.2, 1)
-        both;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8753f transparent;
+
+    transform: translateY(15px) scale(0.97);
+    opacity: 0;
+
+    transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease;
 }
 
 
-/* Main heading */
-.terms-card > h2 {
-    margin: 0 0 8px;
+/* Chrome / Edge / Safari scrollbar */
 
+.contact-popup::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contact-popup::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.contact-popup::-webkit-scrollbar-thumb {
+    background: #c8753f;
+    border-radius: 20px;
+}
+
+.contact-popup::-webkit-scrollbar-thumb:hover {
+    background: #502c2c;
+}
+
+
+/* ================================
+   CLOSE BUTTON
+================================ */
+
+.contact-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(200, 117, 63, 0.45);
+    border-radius: 50%;
+
+    background: rgba(255, 248, 202, 0.55);
+
+    color: #502c2c;
+
+    font-size: 1.7rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.contact-close:hover {
+    background: #502c2c;
     color: #fff8ca;
 
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    line-height: 1.2;
+    transform: rotate(90deg);
 }
 
 
-/* Last updated */
-.terms-card > h4 {
-    margin: 0 0 25px;
+/* ================================
+   TITLE
+================================ */
 
-    color: #d8b6a6;
+.contact-popup h2 {
+    position: relative;
 
-    font-size: 0.85rem;
-    font-weight: 500;
+    margin: 0 0 20px;
+
+    color: #502c2c;
+
+    font-size: clamp(2rem, 5vw, 3.5rem);
+
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+
+    line-height: 1.1;
+    letter-spacing: 0.3px;
 }
 
+.contact-popup h2::after {
+    content: "";
 
-/* Paragraphs */
-.terms-card p {
-    margin: 12px 0;
+    display: block;
 
-    color: #efeaea;
+    width: 65px;
+    height: 3px;
 
-    font-size: 0.95rem;
-    line-height: 1.7;
-}
+    margin-top: 14px;
 
+    background:
+        linear-gradient(
+            90deg,
+            #c8753f,
+            #e4c884
+        );
 
-/* Section headings */
-.terms-card ol > li > h3 {
-    margin: 30px 0 10px;
-
-    color: #e4c884;
-
-    font-size: 1.15rem;
-    line-height: 1.3;
-}
-
-
-/* Lists */
-.terms-card ul {
-    margin: 12px 0;
-    padding-left: 25px;
-}
-
-.terms-card li {
-    color: #efeaea;
-    line-height: 1.65;
-}
-
-.terms-card ul li {
-    margin: 6px 0;
-}
-
-
-/* Scrollbar */
-.terms-card::-webkit-scrollbar {
-    width: 8px;
-}
-
-.terms-card::-webkit-scrollbar-track {
-    background: #1f1413;
-}
-
-.terms-card::-webkit-scrollbar-thumb {
-    background: #c8753f;
     border-radius: 10px;
 }
 
-.terms-card::-webkit-scrollbar-thumb:hover {
-    background: #e4c884;
+
+/* ================================
+   INTRO
+================================ */
+
+.contact-intro {
+    margin-top: 25px;
+}
+
+.contact-intro p {
+    margin: 0;
+
+    color: #502c2c;
+
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+
+    line-height: 1.8;
 }
 
 
-/* Popup animation */
-@keyframes terms-popup-enter {
+/* ================================
+   CONTACT INFORMATION
+================================ */
 
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(0.97);
-    }
+.contact-info {
+    display: grid;
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    grid-template-columns:
+        repeat(3, 1fr);
 
+    gap: 12px;
+
+    margin-top: 28px;
 }
 
 
-/* Mobile */
-@media (max-width: 600px) {
+.contact-info-item {
+    display: flex;
+    align-items: center;
 
-    .terms {
-        padding: 8px;
+    gap: 12px;
+
+    padding: 15px;
+
+    background: rgba(255, 248, 202, 0.48);
+
+    border: 1px solid rgba(200, 117, 63, 0.25);
+
+    border-radius: 16px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.contact-info-item:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 248, 202, 0.75);
+
+    border-color: rgba(200, 117, 63, 0.55);
+}
+
+
+.contact-icon {
+    display: flex;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: #502c2c;
+
+    color: #fff8ca;
+
+    font-size: 1.1rem;
+}
+
+
+.contact-info-item h3 {
+    margin: 0 0 3px;
+
+    color: #502c2c;
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+}
+
+
+.contact-info-item p {
+    margin: 0;
+
+    color: #2d1c1b;
+
+    font-size: 0.82rem;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+
+/* ================================
+   QUICK PURPOSE
+================================ */
+
+.contact-purpose {
+    margin-top: 32px;
+}
+
+
+.contact-purpose > h3,
+.contact-form > h3 {
+    margin: 0 0 15px;
+
+    color: #502c2c;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+}
+
+
+/* Purpose buttons */
+
+.purpose-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+
+.purpose-btn {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 58px;
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(200, 117, 63, 0.3);
+    border-radius: 15px;
+
+    background: rgba(255, 248, 202, 0.45);
+
+    color: #502c2c;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.purpose-btn span:first-child {
+    font-size: 1.35rem;
+}
+
+
+.purpose-btn:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 248, 202, 0.8);
+
+    border-color: rgba(200, 117, 63, 0.65);
+
+    box-shadow:
+        0 7px 18px rgba(80, 44, 44, 0.10);
+}
+
+
+/* Selected purpose */
+
+.purpose-btn.active {
+    background: #502c2c;
+
+    border-color: #c8753f;
+
+    color: #fff8ca;
+
+    box-shadow:
+        0 7px 20px rgba(80, 44, 44, 0.20);
+}
+
+
+/* ================================
+   CONTACT FORM
+================================ */
+
+.contact-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    margin-top: 35px;
+
+    padding-top: 30px;
+
+    border-top:
+        1px solid rgba(200, 117, 63, 0.28);
+}
+
+
+.contact-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.contact-field label {
+    color: #502c2c;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+}
+
+
+.contact-field input,
+.contact-field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid rgba(200, 117, 63, 0.35);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255, 248, 202, 0.58);
+
+    color: #2d1c1b;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.contact-field textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+    color: rgba(80, 44, 44, 0.48);
+}
+
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+    background: rgba(255, 248, 202, 0.85);
+
+    border-color: #c8753f;
+
+    box-shadow:
+        0 0 0 3px rgba(200, 117, 63, 0.12);
+}
+
+
+/* ================================
+   SEND BUTTON
+================================ */
+
+.contact-submit {
+    align-self: flex-start;
+
+    margin-top: 4px;
+
+    padding: 12px 25px;
+
+    border: 1px solid #c8753f;
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #502c2c,
+            #2d1c1b
+        );
+
+    color: #fff8ca;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(80, 44, 44, 0.18);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.contact-submit:hover {
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #c8753f,
+            #502c2c
+        );
+
+    box-shadow:
+        0 10px 25px rgba(80, 44, 44, 0.25);
+}
+
+
+.contact-submit:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   SUCCESS MESSAGE
+================================ */
+
+.contact-success {
+    min-height: 20px;
+
+    margin: 0;
+
+    color: #502c2c;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+
+/* ================================
+   OPEN STATE
+================================ */
+
+.contact-division.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+.contact-division.active .contact-popup {
+    transform: translateY(0) scale(1);
+
+    opacity: 1;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+    .contact-division {
+        padding: 12px;
     }
 
-    .terms-card {
-        width: calc(100vw - 16px);
-        height: calc(100vh - 16px);
 
-        padding: 22px 18px 30px;
+    .contact-popup {
+        width: 100%;
 
-        border-radius: 9px;
+        height: 82vh;
+
+        margin-top: 15px;
+
+        padding: 30px 24px;
+
+        border-radius: 22px;
+
+        outline-width: 5px;
     }
 
-    .terms-card > h2 {
-        font-size: 1.45rem;
+
+    .contact-popup h2 {
+        font-size: clamp(1.8rem, 9vw, 2.6rem);
+
+        margin-bottom: 18px;
     }
 
-    .terms-card p {
+
+    .contact-popup h2::after {
+        width: 50px;
+
+        height: 2px;
+
+        margin-top: 11px;
+    }
+
+
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+
+
+    .contact-info-item {
+        padding: 13px;
+    }
+
+
+    .purpose-options {
+        grid-template-columns: 1fr;
+    }
+
+
+    .contact-purpose {
+        margin-top: 27px;
+    }
+
+
+    .contact-form {
+        margin-top: 30px;
+
+        padding-top: 25px;
+    }
+
+
+    .contact-close {
+        top: 14px;
+        right: 15px;
+
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+/* ================================
+   SMALL PHONES
+================================ */
+
+@media (max-width: 380px) {
+
+    .contact-popup {
+        height: 84vh;
+
+        padding: 25px 19px;
+
+        border-radius: 19px;
+    }
+
+
+    .contact-popup h2 {
+        font-size: 1.8rem;
+    }
+
+
+    .contact-info-item p {
+        font-size: 0.78rem;
+    }
+
+
+    .purpose-btn {
+        min-height: 52px;
+
         font-size: 0.9rem;
-        line-height: 1.65;
     }
 
-    .terms-card ol {
-        padding-left: 22px;
-    }
 
+    .contact-field input,
+    .contact-field textarea {
+        font-size: 0.9rem;
+    }
 }
 
 
-/* Reduced motion */
+/* ================================
+   REDUCED MOTION
+================================ */
+
 @media (prefers-reduced-motion: reduce) {
 
-    .terms-card {
-        animation: none;
+    .contact-division,
+    .contact-popup,
+    .contact-close,
+    .contact-info-item,
+    .purpose-btn,
+    .contact-field input,
+    .contact-field textarea,
+    .contact-submit {
+        transition: none;
     }
-
 }

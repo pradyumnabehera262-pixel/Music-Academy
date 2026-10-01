@@ -494,3 +494,228 @@ if (termsCard && termsBtn) {
 		termsCard.classList.remove("active");
 	});
 }
+
+const privacyBtn = document.getElementById("privacyBtn");
+const privacyDivision = document.getElementById("privacyDivision");
+const privacyClose = document.getElementById("privacyClose");
+
+if (privacyBtn && privacyDivision) {
+    privacyBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        privacyDivision.classList.add("privacy-open");
+        document.body.classList.add("privacy-open");
+    });
+}
+
+if (privacyClose && privacyDivision) {
+    privacyClose.addEventListener("click", () => {
+        privacyDivision.classList.remove("privacy-open");
+        document.body.classList.remove("privacy-open");
+    });
+}
+
+if (privacyDivision) {
+    privacyDivision.addEventListener("click", (event) => {
+        if (event.target === privacyDivision) {
+            privacyDivision.classList.remove("privacy-open");
+            document.body.classList.remove("privacy-open");
+        }
+    });
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && privacyDivision) {
+        privacyDivision.classList.remove("privacy-open");
+        document.body.classList.remove("privacy-open");
+    }
+});
+
+
+
+// ================================
+// CONTACT POPUP
+// ================================
+
+const contactButtons =
+    document.querySelectorAll(".contactBtn");
+
+const contactDivision =
+    document.getElementById("contactDivision");
+
+const contactClose =
+    document.getElementById("contactClose");
+
+
+// Open Contact Popup from ANY Contact button
+
+if (contactButtons.length && contactDivision) {
+
+    contactButtons.forEach((button) => {
+
+        button.addEventListener("click", (event) => {
+
+            event.preventDefault();
+
+            contactDivision.classList.add("active");
+
+            document.body.classList.add("contact-open");
+
+        });
+
+    });
+
+}
+
+
+// Close Contact Popup
+
+if (contactClose && contactDivision) {
+
+    contactClose.addEventListener("click", () => {
+
+        contactDivision.classList.remove("active");
+
+        document.body.classList.remove("contact-open");
+
+    });
+
+}
+
+
+// Close when clicking outside the popup
+
+if (contactDivision) {
+
+    contactDivision.addEventListener("click", (event) => {
+
+        if (event.target === contactDivision) {
+
+            contactDivision.classList.remove("active");
+
+            document.body.classList.remove("contact-open");
+
+        }
+
+    });
+
+}
+
+
+// Close with Escape key
+
+document.addEventListener("keydown", (event) => {
+
+    if (
+        event.key === "Escape" &&
+        contactDivision &&
+        contactDivision.classList.contains("active")
+    ) {
+
+        contactDivision.classList.remove("active");
+
+        document.body.classList.remove("contact-open");
+
+    }
+
+});
+
+
+// ================================
+// QUICK PURPOSE BUTTONS
+// ================================
+
+const purposeButtons =
+    document.querySelectorAll(".purpose-btn");
+
+const contactSubject =
+    document.getElementById("contactSubject");
+
+
+purposeButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        // Remove active from every purpose button
+
+        purposeButtons.forEach((btn) => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+        // Activate selected purpose
+
+        button.classList.add("active");
+
+
+        // Fill Subject automatically
+
+        if (contactSubject) {
+
+            contactSubject.value =
+                button.dataset.purpose;
+
+        }
+
+    });
+
+});
+
+
+// ================================
+// CONTACT FORM
+// ================================
+
+const contactForm =
+    document.getElementById("contactForm");
+
+const contactSuccess =
+    document.getElementById("contactSuccess");
+
+
+if (contactForm) {
+
+    contactForm.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+
+        // Use browser validation
+
+        if (!contactForm.checkValidity()) {
+
+            contactForm.reportValidity();
+
+            return;
+
+        }
+
+
+        // Demo success message
+
+        if (contactSuccess) {
+
+            contactSuccess.textContent =
+                "✓ Thank you! Your message has been received.";
+
+        }
+
+
+        // Reset form
+
+        contactForm.reset();
+
+
+        // Remove selected purpose
+
+        purposeButtons.forEach((button) => {
+
+            button.classList.remove("active");
+
+        });
+
+    });
+
+}
+
