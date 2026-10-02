@@ -1,0 +1,97 @@
+{% set footer_is_home = request.endpoint == 'home' %}
+<footer id="footer">
+    <div class="footer-container">
+        <div class="footer-banner">
+            <div class="banner-heading">
+                <h3>SCHOLARSHIP OPPORTUNITY</h3>
+                <h2>Your Talent Deserves<br>A Chance</h2>
+            </div>
+            <div class="separator"></div>
+            <div class="banner-info">
+                <p>Scholarships are available for passionate students who want to learn, create, and grow through music.
+                </p>
+                <a class="contactBtn scholarship-cta" href="#contactDivision" data-scholarship-inquiry>
+                    Ask about scholarships →
+                </a>
+            </div>
+        </div>
+        <div class="footer-main">
+            <div class="footer-identity">
+                <span class="footer-mark" aria-hidden="true"><i class="fa-solid fa-music"></i></span>
+                <p class="footer-eyebrow">LEARN · CREATE · PERFORM</p>
+                <h2>Find your<br>own rhythm.</h2>
+                <p class="footer-note">A welcoming place to discover your sound and make it your own.</p>
+            </div>
+            <div class="footer-discovery">
+                <div class="menu">
+                    <h3>Explore</h3>
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a class="opt aboutBtn" href="#aboutDiv">About</a>
+                    <a class="opt" href="{{ url_for('home') }}#coursesSection">Courses</a>
+                    <a class="opt contactBtn" href="#contactDivision">Contact</a>
+                </div>
+                <div class="social-media">
+                    <h3>Follow the sound</h3>
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-facebook" aria-hidden="true"></i><span>Facebook</span>
+                    </a>
+                    <a href="https://www.instagram.com/logicspace.career/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i><span>Instagram</span>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-x-twitter" aria-hidden="true"></i><span>X / Twitter</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-contact-group">
+                <div class="contacts">
+                    <h3>Start a conversation</h3>
+                    <p>
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        <span><small>Email</small><a href="mailto:example@gmail.com">example@gmail.com</a></span>
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                        <span><small>Call</small><a href="tel:+919876543210">+91 98765 43210</a></span>
+                    </p>
+                </div>
+                <div class="connections">
+                    <h3>In rotation</h3>
+                    <p><i class="fa-solid fa-compact-disc" aria-hidden="true"></i> T-series</p>
+                    <p><i class="fa-brands fa-spotify" aria-hidden="true"></i> Spotify</p>
+                </div>
+            </div>
+            <div class="footer-actions">
+                <p class="footer-question-prompt">
+                    <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
+                    Have a question about getting started?
+                </p>
+                <div class="footer-action-buttons">
+                    <button class="footer-question-button contactBtn" type="button">
+                        <i class="fa-regular fa-message" aria-hidden="true"></i> Ask a question
+                    </button>
+                    <button class="apply-btn admission-trigger" type="button" data-open-admission aria-haspopup="dialog"
+                        aria-controls="admission-dialog">
+                        <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i> Apply for admission
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="official-rights">
+            <div class="official-documents">
+                {% if footer_is_home %}
+                <a id="termsBtn" href="#terms">Terms &amp; Conditions</a>
+                {% else %}
+                <a href="{{ url_for('home') }}#terms">Terms &amp; Conditions</a>
+                {% endif %}
+                <p>|</p>
+                {% if footer_is_home %}
+                <a id="privacyBtn" href="#privacy">Privacy &amp; Policy</a>
+                {% else %}
+                <a href="{{ url_for('home') }}#privacy">Privacy &amp; Policy</a>
+                {% endif %}
+            </div>
+            <p>&copy; 2024 Music Academy. All rights reserved.</p>
+        </div>
+    </div>
+</footer>

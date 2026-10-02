@@ -523,6 +523,15 @@ if (privacyDivision) {
     });
 }
 
+if (window.location.hash === "#terms" && termsCard) {
+	termsCard.classList.add("active");
+}
+
+if (window.location.hash === "#privacy" && privacyDivision) {
+	privacyDivision.classList.add("privacy-open");
+	document.body.classList.add("privacy-open");
+}
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && privacyDivision) {
         privacyDivision.classList.remove("privacy-open");
@@ -559,6 +568,14 @@ if (contactButtons.length && contactDivision) {
             contactDivision.classList.add("active");
 
             document.body.classList.add("contact-open");
+
+			if (button.hasAttribute("data-scholarship-inquiry")) {
+				contactDivision
+					.querySelector('.purpose-btn[data-purpose="Fees & Scholarships"]')
+					?.click();
+			} else {
+				resetQuickPurpose();
+			}
 
         });
 
@@ -630,6 +647,30 @@ const purposeButtons =
 const contactSubject =
     document.getElementById("contactSubject");
 
+const contactMessage =
+	document.getElementById("contactMessage");
+
+let selectedQuickMessage = "";
+
+const resetQuickPurpose = () => {
+	const selectedPurpose = [...purposeButtons].find((button) => button.classList.contains("active"));
+
+	if (contactSubject && selectedPurpose && contactSubject.value === selectedPurpose.dataset.purpose) {
+		contactSubject.value = "";
+	}
+
+	if (contactMessage && selectedQuickMessage && contactMessage.value === selectedQuickMessage) {
+		contactMessage.value = "";
+	}
+
+	purposeButtons.forEach((button) => {
+		button.classList.remove("active");
+		button.setAttribute("aria-pressed", "false");
+	});
+
+	selectedQuickMessage = "";
+};
+
 
 purposeButtons.forEach((button) => {
 
@@ -640,6 +681,7 @@ purposeButtons.forEach((button) => {
         purposeButtons.forEach((btn) => {
 
             btn.classList.remove("active");
+			btn.setAttribute("aria-pressed", "false");
 
         });
 
@@ -647,6 +689,17 @@ purposeButtons.forEach((button) => {
         // Activate selected purpose
 
         button.classList.add("active");
+		button.setAttribute("aria-pressed", "true");
+
+		if (contactMessage && selectedQuickMessage && contactMessage.value === selectedQuickMessage) {
+			contactMessage.value = "";
+		}
+
+		selectedQuickMessage = button.dataset.message || "";
+
+		if (contactMessage && selectedQuickMessage) {
+			contactMessage.value = selectedQuickMessage;
+		}
 
 
         // Fill Subject automatically
@@ -712,8 +765,11 @@ if (contactForm) {
         purposeButtons.forEach((button) => {
 
             button.classList.remove("active");
+			button.setAttribute("aria-pressed", "false");
 
         });
+
+		selectedQuickMessage = "";
 
     });
 
