@@ -17,7 +17,7 @@
          margin: 0;
          padding: 1px 16px 40px;
          overflow-x: hidden;
-         background: linear-gradient(180deg, #382018 0%, #814525 48%, #f2a262 100%);
+         background: linear-gradient(160deg, #f7efe1 0%, #efdec2 54%, #e5bd9e 100%);
          color: #332820;
          font: 15px/1.5 "Trebuchet MS", Arial, sans-serif
       }
@@ -37,7 +37,7 @@
          width: var(--size);
          height: var(--size);
          overflow: visible;
-         color: rgba(255, 239, 211, var(--opacity));
+         color: rgba(128, 83, 60, var(--opacity));
          animation: float-up var(--duration) var(--delay) linear infinite;
          will-change: transform, opacity
       }
@@ -79,12 +79,13 @@
          position: relative;
          z-index: 1;
          width: min(520px, 100%);
-         margin: 46px auto 0;
+         margin: 28px auto 0;
          padding: 28px 34px 32px;
-         border-top: 5px solid #d8652d;
-         border-radius: 8px;
+         border: 1px solid rgba(126, 83, 58, 0.16);
+         border-top: 4px solid #b96e50;
+         border-radius: 10px;
          background: #fffdf8;
-         box-shadow: 0 18px 55px rgba(32, 15, 8, .28)
+         box-shadow: 0 18px 44px rgba(67, 40, 31, .16)
       }
 
       h1 {
@@ -101,23 +102,61 @@
       }
 
       .form-feedback {
-         margin: 0 0 18px;
-         padding: 12px 14px;
+         display: grid;
+         grid-template-columns: 34px minmax(0, 1fr);
+         align-items: start;
+         gap: 11px;
+         margin: 0 0 20px;
+         padding: 14px 15px;
          border: 1px solid;
-         border-radius: 5px;
+         border-left-width: 4px;
+         border-radius: 8px;
+         line-height: 1.5
+      }
+
+      .form-feedback-mark {
+         display: grid;
+         width: 32px;
+         aspect-ratio: 1;
+         place-items: center;
+         border-radius: 50%;
+         font-size: 1rem;
          font-weight: 700
+      }
+
+      .form-feedback strong {
+         display: block;
+         font-size: 1rem
+      }
+
+      .form-feedback p {
+         margin: 4px 0 0;
+         font-size: .9rem;
+         font-weight: 400
       }
 
       .form-feedback-success {
          border-color: #9bad83;
+         border-left-color: #73875a;
          background: #edf2e5;
          color: #3d5738
       }
 
+      .form-feedback-success .form-feedback-mark {
+         background: #dce8ce;
+         color: #4c663b
+      }
+
       .form-feedback-error {
          border-color: #c7826d;
+         border-left-color: #a34f40;
          background: #f8e7df;
          color: #743c32
+      }
+
+      .form-feedback-error .form-feedback-mark {
+         background: #f0d2c5;
+         color: #8a4438
       }
 
       .input-name {
@@ -128,6 +167,12 @@
          display: grid;
          grid-template-columns: 1fr 1fr;
          gap: 12px
+      }
+
+      @media(max-width:520px) {
+         .name-row {
+            grid-template-columns: 1fr
+         }
       }
 
       .field {
@@ -240,9 +285,9 @@
          min-height: 75px;
          overflow: hidden;
          padding: 12px;
-         border: 2px solid #555;
+         border: 2px solid #b89b84;
          border-radius: 6px;
-         background: linear-gradient(145deg, #5b3027, #201b1a);
+         background: linear-gradient(145deg, #815044, #5e4140);
          color: white;
          cursor: pointer;
          transition: transform .25s, border-color .25s, box-shadow .25s;
@@ -250,14 +295,14 @@
       }
 
       .gender-female {
-         background: linear-gradient(145deg, #713b42, #201b1a);
+         background: linear-gradient(145deg, #92595a, #684748);
          animation-delay: .1s
       }
 
       .gender-card:hover {
          transform: translateY(-4px);
-         border-color: #e75a08;
-         box-shadow: 0 7px 14px rgba(0, 0, 0, .35)
+         border-color: #bd7658;
+         box-shadow: 0 7px 14px rgba(89, 54, 42, .2)
       }
 
       .gender-card input {
@@ -305,7 +350,7 @@
          width: 19px;
          height: 19px;
          border-radius: 50%;
-         background: #e75a08;
+         background: #b96e50;
          color: white;
          content: "✓";
          font-size: 13px;
@@ -317,8 +362,8 @@
       }
 
       .gender-card:has(input:checked) {
-         border-color: #ff994a;
-         box-shadow: 0 0 0 3px rgba(231, 90, 8, .3), 0 7px 14px rgba(0, 0, 0, .35)
+         border-color: #bd7658;
+         box-shadow: 0 0 0 3px rgba(185, 110, 80, .22), 0 7px 14px rgba(89, 54, 42, .2)
       }
 
       .gender-card:has(input:checked) .gender-symbol {
@@ -450,7 +495,7 @@
          }
 
          .container {
-            margin-top: 22px;
+            margin-top: 14px;
             padding: 23px 18px 25px
          }
 
@@ -524,10 +569,21 @@
       <h1>Admission Form</h1>
       <p class="intro">Start your next chapter in music.</p>
       {% if registration_success %}
-      <p class="form-feedback form-feedback-success" role="status">Your application has been registered successfully.
-      </p>
+      <div class="form-feedback form-feedback-success" role="status">
+         <span class="form-feedback-mark" aria-hidden="true">&#10003;</span>
+         <div>
+            <strong>Application received</strong>
+            <p>Your application has been saved successfully. Thank you for getting started with Music Academy.</p>
+         </div>
+      </div>
       {% elif registration_error %}
-      <p class="form-feedback form-feedback-error" role="alert">{{ registration_error }}</p>
+      <div class="form-feedback form-feedback-error" role="alert">
+         <span class="form-feedback-mark" aria-hidden="true">!</span>
+         <div>
+            <strong>We couldn't submit your application yet</strong>
+            <p>{{ registration_error }}</p>
+         </div>
+      </div>
       {% endif %}
       <form action="{{ url_for('admission') }}" method="post">
          <div class="input-name name-row">

@@ -1503,18 +1503,18 @@ header {
 .admission-dialog {
     display: flex;
     flex-direction: column;
-    width: min(680px, calc(100vw - 32px));
-    height: min(880px, calc(100vh - 32px));
+    width: min(760px, calc(100vw - 32px));
+    height: min(900px, calc(100dvh - 32px));
     max-width: none;
     max-height: none;
     margin: auto;
     padding: 0;
     overflow: hidden;
-    border: 2px solid #c8753f;
-    border-radius: 10px;
-    background: #2d1c1b;
-    color: #fff8ca;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    border: 1px solid #c18a68;
+    border-radius: 12px;
+    background: #f4ead7;
+    color: #3f3027;
+    box-shadow: 0 24px 70px rgba(67, 40, 31, 0.3);
 }
 
 .admission-dialog[open] {
@@ -1528,19 +1528,38 @@ header {
 
 .admission-dialog-header {
     display: flex;
-    flex: 0 0 58px;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 0 14px 0 20px;
-    background: #502c2c;
+    min-height: 92px;
+    padding: 14px 16px 14px 22px;
+    background: linear-gradient(112deg, #65383c 0%, #87484a 52%, #a85f45 100%);
+}
+
+.admission-dialog-copy {
+    min-width: 0;
+}
+
+.admission-dialog-kicker {
+    margin: 0 0 4px;
+    color: #f1c6a5;
+    font-size: 0.68rem;
+    font-weight: 700;
 }
 
 .admission-dialog-header h2 {
     margin: 0;
-    color: #fff8ca;
-    font-size: 1.05rem;
+    color: #fff7ed;
+    font-size: 1.2rem;
     line-height: 1.2;
+}
+
+.admission-dialog-subtitle {
+    margin: 4px 0 0;
+    color: rgba(255, 247, 237, 0.82);
+    font-size: 0.84rem;
+    line-height: 1.4;
 }
 
 .admission-dialog-close {
@@ -1549,10 +1568,10 @@ header {
     width: 38px;
     height: 38px;
     place-items: center;
-    border: 1px solid rgba(255, 248, 202, 0.42);
+    border: 1px solid rgba(255, 247, 237, 0.5);
     border-radius: 6px;
     background: transparent;
-    color: #fff8ca;
+    color: #fff7ed;
     font-size: 1.15rem;
     cursor: pointer;
     transition: background-color 160ms ease, color 160ms ease;
@@ -1560,8 +1579,8 @@ header {
 
 .admission-dialog-close:hover,
 .admission-dialog-close:focus-visible {
-    background: #fff8ca;
-    color: #502c2c;
+    background: #fff7ed;
+    color: #65383c;
 }
 
 .admission-frame {
@@ -1570,7 +1589,7 @@ header {
     width: 100%;
     min-height: 0;
     border: 0;
-    background: #000;
+    background: #f4ead7;
 }
 
 @keyframes admission-dialog-enter {
@@ -1593,8 +1612,16 @@ header {
     }
 
     .admission-dialog-header {
-        flex-basis: 52px;
-        padding-inline: 12px;
+        min-height: 82px;
+        padding: 12px;
+    }
+
+    .admission-dialog-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .admission-dialog-subtitle {
+        font-size: 0.78rem;
     }
 }
 

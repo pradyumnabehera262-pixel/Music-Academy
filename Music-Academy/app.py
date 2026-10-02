@@ -119,7 +119,7 @@ def admission():
             'admission.html',
             form_data=form_data,
             selected_secondary_subjects=selected_secondary_subjects,
-            registration_error='Please complete all required fields with valid information and accept the terms.',
+            registration_error='Some required details are missing or invalid. Check every required field and accept the consultation terms, then try again.',
         ), 400
 
     application = AdmissionApplication(
@@ -142,7 +142,7 @@ def admission():
             'admission.html',
             form_data=form_data,
             selected_secondary_subjects=selected_secondary_subjects,
-            registration_error='An application with this email already exists. Each email can register once.',
+            registration_error='This email already has an application. Each email can be used once. Contact the academy if you need help.',
         ), 409
 
     return redirect(url_for('admission', submitted='1'), code=303)
