@@ -257,14 +257,36 @@ header {
     transform-origin: center;
 }
 
+.top-bar .opt,
+.top-bar button.opt {
+    color: white;
+    text-decoration: none;
+    font: inherit;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease, padding 0.2s ease-in-out, border-radius 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transform-origin: center;
+}
+
 .top-bar a:hover,
-.top-bar a:focus-visible {
+.top-bar a:focus-visible,
+.top-bar .opt:hover,
+.top-bar .opt:focus-visible,
+.top-bar button.opt:hover,
+.top-bar button.opt:focus-visible {
     color: #fff8ca;
     transform: scale(1.04);
     text-shadow: 0 0 8px rgba(255, 248, 202, 0.35);
 }
 
-.top-bar .opt:hover {
+.top-bar .opt:hover,
+.top-bar button.opt:hover,
+.top-bar .opt:focus-visible,
+.top-bar button.opt:focus-visible {
     background-color: #fff8ca33;
     padding: 5px 10px;
     border-radius: 40px;
@@ -1292,7 +1314,12 @@ header {
     white-space: normal;
     user-select: none;
     -webkit-touch-callout: none;
-    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y pinch-zoom;
+}
+
+.intro .special-paragraph .char {
+    -webkit-tap-highlight-color: transparent;
 }
 
 .intro .special-paragraph:hover {
@@ -1312,11 +1339,22 @@ header {
     -webkit-touch-callout: none;
 }
 
-.intro .special-paragraph .char:hover {
+.intro .special-paragraph .char:hover,
+.intro .special-paragraph .char.is-touch-active {
     transform: translateY(-8px);
     color: #edd5d5;
     text-shadow: 0 0 14px rgba(255, 248, 202, 0.65);
     -webkit-touch-callout: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .intro .special-paragraph .char,
+    .intro .special-paragraph .char.is-touch-active {
+        transition: none;
+        transform: none;
+        text-shadow: none;
+    }
 }
 
 

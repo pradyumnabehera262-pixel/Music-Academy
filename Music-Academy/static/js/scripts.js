@@ -19,6 +19,70 @@ function wrapIntroQuoteCharacters() {
 	introQuote.dataset.charsWrapped = 'true';
 }
 
+function initializeIntroQuoteTouch() {
+	const introQuote = document.querySelector('.intro-quote');
+	if (!introQuote || !window.PointerEvent) {
+		return;
+	}
+
+	let activePointerId = null;
+	let lastCharacter = null;
+	const characterTimers = new WeakMap();
+
+	const animateCharacter = (character) => {
+		if (!character) {
+			lastCharacter = null;
+			return;
+		}
+
+		if (character === lastCharacter) {
+			return;
+		}
+
+		lastCharacter = character;
+		window.clearTimeout(characterTimers.get(character));
+		character.classList.remove('is-touch-active');
+		void character.offsetWidth;
+		character.classList.add('is-touch-active');
+		characterTimers.set(character, window.setTimeout(() => {
+			character.classList.remove('is-touch-active');
+			characterTimers.delete(character);
+		}, 420));
+	};
+
+	const handlePointerMove = (event) => {
+		if (event.pointerId !== activePointerId) {
+			return;
+		}
+
+		const element = document.elementFromPoint(event.clientX, event.clientY);
+		const character = element?.closest('.intro-quote .char');
+		animateCharacter(character && introQuote.contains(character) ? character : null);
+	};
+
+	introQuote.addEventListener('pointerdown', (event) => {
+		if (event.pointerType !== 'touch' && event.pointerType !== 'pen') {
+			return;
+		}
+
+		activePointerId = event.pointerId;
+		lastCharacter = null;
+		handlePointerMove(event);
+	});
+
+	document.addEventListener('pointermove', handlePointerMove);
+
+	const endPointer = (event) => {
+		if (event.pointerId === activePointerId) {
+			activePointerId = null;
+			lastCharacter = null;
+		}
+	};
+
+	document.addEventListener('pointerup', endPointer);
+	document.addEventListener('pointercancel', endPointer);
+}
+
 function initializeMenu() {
 	const menuButton = document.querySelector('.menu-button');
 	const topMenu = document.querySelector('#top-menu');
@@ -27,6 +91,7 @@ function initializeMenu() {
 	const hero = document.querySelector('.hero');
 
 	wrapIntroQuoteCharacters();
+	initializeIntroQuoteTouch();
 
 	if (!topBar || !topLogo) {
 		return;
@@ -442,25 +507,39 @@ if (track && rightBtn && leftBtn){
 	startAutoSlide();
 }
 
-const aboutBtn = document.querySelectorAll(".aboutBtn");
+const aboutButtons = document.querySelectorAll(".aboutBtn");
 const aboutDiv = document.getElementById("aboutDiv");
 
-if (aboutBtn.length && aboutDiv){
-	
-	aboutBtn.forEach(function(button) {
-		button.addEventListener("click", function(){
-		console.log("clicking");
+if (aboutButtons.length && aboutDiv) {
+	const openAboutPopup = () => {
 		aboutDiv.classList.add("is-visible");
 		document.body.classList.add("about-open");
-	});
+	};
 
-	aboutDiv.addEventListener("click", function(){
-		console.log("clicking");
+	const closeAboutPopup = () => {
 		aboutDiv.classList.remove("is-visible");
 		document.body.classList.remove("about-open");
+	};
+
+	aboutButtons.forEach((button) => {
+		button.addEventListener("click", (event) => {
+			event.preventDefault();
+			openAboutPopup();
+		});
 	});
+
+	aboutDiv.addEventListener("click", (event) => {
+		if (event.target === aboutDiv) {
+			closeAboutPopup();
+		}
 	});
-};
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && aboutDiv.classList.contains("is-visible")) {
+			closeAboutPopup();
+		}
+	});
+}
 
 //footer-banner separator animate
 
@@ -728,50 +807,51 @@ const contactSuccess =
 
 
 if (contactForm) {
-
-    contactForm.addEventListener("submit", (event) => {
-
+    contactForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-
-        // Use browser validation
-
         if (!contactForm.checkValidity()) {
-
             contactForm.reportValidity();
-
             return;
-
         }
 
+        const formData = new FormData(contactForm);
 
-        // Demo success message
+        try {
+            const response = await fetch("/contact", {
+                method: "POST",
+                body: formData,
+            });
 
-        if (contactSuccess) {
+            const result = await response.json().catch(() => ({}));
 
-            contactSuccess.textContent =
-                "✓ Thank you! Your message has been received.";
+            if (!response.ok || result.success === false) {
+                if (contactSuccess) {
+                    contactSuccess.textContent = result.message || "Unable to send your message right now. Please try again.";
+                    contactSuccess.classList.add("error");
+                }
+                return;
+            }
 
+            if (contactSuccess) {
+                contactSuccess.textContent = result.message || "✓ Thank you! Your message has been received.";
+                contactSuccess.classList.remove("error");
+            }
+
+            contactForm.reset();
+
+            purposeButtons.forEach((button) => {
+                button.classList.remove("active");
+                button.setAttribute("aria-pressed", "false");
+            });
+
+            selectedQuickMessage = "";
+        } catch (error) {
+            if (contactSuccess) {
+                contactSuccess.textContent = "Something went wrong while sending your message. Please try again.";
+                contactSuccess.classList.add("error");
+            }
         }
-
-
-        // Reset form
-
-        contactForm.reset();
-
-
-        // Remove selected purpose
-
-        purposeButtons.forEach((button) => {
-
-            button.classList.remove("active");
-			button.setAttribute("aria-pressed", "false");
-
-        });
-
-		selectedQuickMessage = "";
-
     });
-
 }
 

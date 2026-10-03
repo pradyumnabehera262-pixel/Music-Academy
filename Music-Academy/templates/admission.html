@@ -656,7 +656,8 @@
          <section id="secondary-section" class="input-name" hidden aria-labelledby="secondary-heading">
             <h2 id="secondary-heading" class="section-title">Choose secondary subjects</h2>
             <p id="secondary-help" class="helper">Select any additional areas you'd like to explore.</p>
-            <div id="secondary-subjects" aria-live="polite"></div>
+            <div id="secondary-subjects" data-selected='{{ selected_secondary_subjects | tojson }}' aria-live="polite">
+            </div>
          </section>
          <section class="input-name" aria-labelledby="gender-heading">
             <h2 id="gender-heading" class="section-title">Choose your gender</h2>
@@ -724,7 +725,7 @@
       const secondarySection = document.getElementById("secondary-section");
       const secondarySubjects = document.getElementById("secondary-subjects");
       const countrySelect = document.getElementById("country");
-      const selectedSecondarySubjects = {{ selected_secondary_subjects | tojson }};
+      const selectedSecondarySubjects = JSON.parse(secondarySubjects.dataset.selected || "[]");
       const subjectOptions = {
          vocal: ["Indian Classical Vocal", "Western Vocal", "Bollywood Singing", "Vocal Technique"],
          guitar: ["Music Theory", "Songwriting", "Acoustic Guitar", "Music Performance"],

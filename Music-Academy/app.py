@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -11,10 +11,12 @@ database_dir = os.path.join(base_dir, "database")
 os.makedirs(database_dir, exist_ok=True)
 database_path = os.path.join(database_dir, "instructors.db")
 admissions_database_path = os.path.join(database_dir, "admissions.db")
+contact_database_path = os.path.join(database_dir, "contacts.db")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + database_path
 app.config["SQLALCHEMY_BINDS"] = {
     "admissions": "sqlite:///" + admissions_database_path,
+    "contacts": "sqlite:///" + contact_database_path,
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -41,6 +43,17 @@ class AdmissionApplication(db.Model):
     main_subject = db.Column(db.String(50), nullable=False)
     secondary_subjects = db.Column(db.Text, nullable=False, default="")
     gender = db.Column(db.String(20), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.current_timestamp())
+
+
+class ContactMessage(db.Model):
+    __bind_key__ = "contacts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    subject = db.Column(db.String(200), nullable=False)
+    message = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.current_timestamp())
 
 
@@ -146,6 +159,42 @@ def admission():
         ), 409
 
     return redirect(url_for('admission', submitted='1'), code=303)
+
+
+@app.route('/contact', methods=['POST'])
+def contact():
+    name = request.form.get('name', '').strip()
+    email = request.form.get('email', '').strip().lower()
+    subject = request.form.get('subject', '').strip()
+    message = request.form.get('message', '').strip()
+
+    if not all((name, email, subject, message)):
+        return jsonify({
+            'success': False,
+            'message': 'Please complete all fields before sending your message.'
+        }), 400
+
+    email_parts = email.split('@')
+    valid_email = len(email_parts) == 2 and bool(email_parts[0]) and '.' in email_parts[1]
+    if not valid_email:
+        return jsonify({
+            'success': False,
+            'message': 'Please enter a valid email address.'
+        }), 400
+
+    contact_message = ContactMessage(
+        name=name,
+        email=email,
+        subject=subject,
+        message=message,
+    )
+    db.session.add(contact_message)
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'message': 'Thank you! Your message has been sent successfully.'
+    })
 
 
 @app.route('/instructors')
